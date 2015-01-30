@@ -1,0 +1,198 @@
+//
+//  TruckMakerView.m
+//  starterkit
+//
+//  Created by Woudini on 12/15/14.
+//  Copyright (c) 2014 Hi Range. All rights reserved.
+//
+
+#import "TruckMakerView.h"
+#import <QuartzCore/QuartzCore.h>
+
+@interface TruckMakerView ()
+{
+    BOOL _bannerIsVisible;
+    ADBannerView *_adBanner;
+}
+@end
+
+@implementation TruckMakerView
+- (void)setup
+{
+    
+    self.backgroundColor = [UIColor clearColor];
+    
+    // I'm not opaque
+    self.opaque = NO;
+    
+    // want to redraw if bounds change
+    self.contentMode = UIViewContentModeRedraw;
+    [self setNeedsDisplay];
+}
+
+- (void)awakeFromNib
+{
+    [self setup];
+}
+
+- (id)initWithFrame:(CGRect)aRect
+{
+    self = [super initWithFrame:aRect];
+    [self setup];
+    return self;
+}
+
+- (void)bannerViewDidLoadAd:(ADBannerView *)banner
+{
+    if (!_bannerIsVisible)
+    {
+        // If banner isn't part of view hierarchy, add it
+        if (_adBanner.superview == nil)
+        {
+            [self addSubview:_adBanner];
+        }
+        
+        [UIView beginAnimations:@"animateAdBannerOn" context:NULL];
+        
+        // Assumes the banner view is just off the bottom of the screen.
+        banner.frame = CGRectOffset(banner.frame, 0, -banner.frame.size.height);
+        
+        [UIView commitAnimations];
+        
+        _bannerIsVisible = YES;
+    }
+}
+
+- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
+{
+    NSLog(@"Failed to retrieve ad");
+    if (_bannerIsVisible)
+    {
+        [UIView beginAnimations:@"animateAdBannerOff" context:NULL];
+        
+        // Assumes the banner view is placed at the bottom of the screen.
+        banner.frame = CGRectOffset(banner.frame, 0, banner.frame.size.height);
+        
+        [UIView commitAnimations];
+        
+        _bannerIsVisible = NO;
+    }
+}
+
+- (void)drawRect:(CGRect)aRect {
+    NSLog(@"drawRect called");
+    CGFloat width = self.bounds.size.width; //width of the screen
+    CGFloat height = self.bounds.size.height; //height of the screen
+
+        UIBezierPath *path = [[UIBezierPath alloc] init];
+    
+        // top left corner
+        CGPoint a = CGPointMake(width/2-140, height/2-40);
+    
+        // top axle
+        CGPoint b = CGPointMake(width/2+140,a.y);
+    
+        // axle diameter, right side
+        CGPoint c = CGPointMake(b.x,b.y+20);
+    
+        // starting arc towards pivot cup
+        CGPoint d = CGPointMake(b.x-50,b.y+30);
+    
+        // control point for arc towards pivot cup
+        CGPoint e = CGPointMake(b.x-100,b.y+43);
+    
+        // point at pivot cup
+        CGPoint f = CGPointMake(width/2+15,b.y+65);
+    
+        [path moveToPoint:a];
+        [path addLineToPoint:b];
+        [path addLineToPoint:c];
+        [path addLineToPoint:d];
+        [path addQuadCurveToPoint:f controlPoint:e];
+        
+        // !point at pivot cup
+        [path addLineToPoint:CGPointMake(width/2-15,f.y)];
+    
+        // !control point + arc towards pivot cup
+        [path addQuadCurveToPoint:CGPointMake(width/2-90,d.y) controlPoint:CGPointMake(width/2-40,e.y)];
+    
+        // !starting arc towards pivot cup
+        [path addLineToPoint:CGPointMake(width/2-140,c.y)];
+    
+        // axle diameter, right side
+        [path addLineToPoint:CGPointMake(width/2-140,b.y)];
+        [path closePath];
+    
+        // draw the path
+        [[UIColor blackColor] setStroke];
+        [path stroke];
+        [path fillWithBlendMode:kCGBlendModeClear alpha:0];
+    
+        // baseplate
+        UIBezierPath *path2 = [[UIBezierPath alloc] init];
+    
+        // baseplate length1
+        CGPoint g = CGPointMake(width/2+25,f.y);
+    
+        // baseplate height1
+        CGPoint h = CGPointMake(g.x,g.y+10);
+    
+        // baseplate length2
+        CGPoint i = CGPointMake(g.x+70,h.y+10);
+    
+        // baseplate height2
+        CGPoint j = CGPointMake(i.x,i.y+10);
+    
+        // baseplate bottom
+        CGPoint k = CGPointMake(width/2-90,j.y);
+    
+        // !baseplate height2
+        CGPoint l = CGPointMake(width/2-90,i.y);
+    
+        // !baseplate length2
+        CGPoint m = CGPointMake(width/2-25,h.y);
+    
+        // !basepplate height1
+        CGPoint n = CGPointMake(width/2-25,g.y);
+    
+        [path2 moveToPoint:g];
+        [path2 addLineToPoint:h];
+        [path2 addLineToPoint:i];
+        [path2 addLineToPoint:j];
+        [path2 addLineToPoint:k];
+        [path2 addLineToPoint:l];
+        [path2 addLineToPoint:m];
+        [path2 addLineToPoint:n];
+        [path2 closePath];
+        [path2 stroke];
+        
+        // Fill the area outside of the bezier path we created with white
+        // [path fill] does not cover the outside area with white; image shows through outside of the shape
+        [[UIColor whiteColor] setFill];
+        UIRectFill(aRect);
+    
+        // Cut a hole in the shape of the path, revealing the image in DeckViewController
+        CGContextRef ctx = UIGraphicsGetCurrentContext();
+        CGContextSetBlendMode(ctx, kCGBlendModeDestinationOut);
+        [path fill];
+        [path2 fill];
+    
+        // Redraw the paths, as they have been changed to white
+        CGContextSetBlendMode(ctx, kCGBlendModeNormal);
+        [path stroke];
+        [path2 stroke];
+    
+    _adBanner = [[ADBannerView alloc] initWithFrame:CGRectMake(0,self.bounds.size.height-45, 320, 50)];
+    _adBanner.delegate = self;
+}
+
+
+/*
+// Only override drawRect: if you perform custom drawing.
+// An empty implementation adversely affects performance during animation.
+- (void)drawRect:(CGRect)rect {
+    // Drawing code
+}
+*/
+
+@end
