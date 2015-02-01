@@ -80,6 +80,28 @@
     return (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 2 : 1;
 }
 
+-(int)adjustedXOriginForDevice
+{
+    return (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 0 : -35;
+}
+
+
+-(int)adjustedYOriginForDevice
+{
+    return (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? (self.bounds.size.height-70)/2-(168*2)+2 : (self.bounds.size.height-70)/2-(168)+1;
+}
+
+-(int)adjustedHeightForDevice
+{
+    return (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? self.bounds.size.width : self.bounds.size.height-100;
+}
+
+-(int)adjustedWidthForDevice
+{
+    return (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? self.bounds.size.width : self.bounds.size.width+70;
+}
+
+
 - (void)drawRect:(CGRect)aRect
 {
     NSLog(@"drawRect called");
@@ -159,7 +181,11 @@
     // Redraw the path, as it has been changed to white
     [path stroke];
     
-    self.imageCaptureRect = CGRectMake(0, height/2-(168*scaleFactor)+1*scaleFactor, width, width);
+    CGFloat adjustedXOrigin = [self adjustedXOriginForDevice];
+    CGFloat adjustedYOrigin = [self adjustedYOriginForDevice];
+    CGFloat adjustedHeight = [self adjustedHeightForDevice];
+    CGFloat adjustedWidth = [self adjustedWidthForDevice];
+    self.imageCaptureRect = CGRectMake(adjustedXOrigin, adjustedYOrigin, adjustedWidth, adjustedHeight);
     UIBezierPath *markerPath = [[UIBezierPath alloc] init];
     [markerPath moveToPoint:CGPointMake(0, height/2-(168*scaleFactor))];
     [markerPath addLineToPoint:CGPointMake(500, height/2-(168*scaleFactor))];

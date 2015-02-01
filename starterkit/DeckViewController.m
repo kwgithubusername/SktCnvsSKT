@@ -82,7 +82,7 @@ typedef void (^CancelTouchesInViewBlock)();
     [[UIColor blackColor] set];
     CGContextFillRect(ctx, screenRect);
     
-    CGContextTranslateCTM(ctx, 0, -screenRect.origin.y);
+    CGContextTranslateCTM(ctx, -screenRect.origin.x, -screenRect.origin.y);
     
     [view.layer renderInContext:ctx];
     
