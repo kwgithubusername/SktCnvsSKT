@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="fOj-gv-O7f">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Deck View Controller-->
@@ -16,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YsW-7P-H3K">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YsW-7P-H3K">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
                             </scrollView>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="deW-cz-hBR">
@@ -27,7 +28,11 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerY" secondItem="deW-cz-hBR" secondAttribute="centerY" id="0gD-A2-Jkx"/>
+                            <constraint firstItem="YsW-7P-H3K" firstAttribute="top" secondItem="0Jj-Cg-kvX" secondAttribute="bottom" constant="-64" id="cbO-WB-Nv0"/>
                             <constraint firstAttribute="centerX" secondItem="deW-cz-hBR" secondAttribute="centerX" id="dP8-2h-20a"/>
+                            <constraint firstItem="YsW-7P-H3K" firstAttribute="leading" secondItem="Qdo-4M-Ltb" secondAttribute="leadingMargin" constant="-16" id="iWq-pL-INs"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="YsW-7P-H3K" secondAttribute="trailing" constant="-16" id="kEd-Eh-NGN"/>
+                            <constraint firstItem="uPU-Am-gvF" firstAttribute="top" secondItem="YsW-7P-H3K" secondAttribute="bottom" id="rgD-XK-3jF"/>
                         </constraints>
                     </view>
                     <toolbarItems>
@@ -37,14 +42,9 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="1lh-YW-8KR"/>
-                        <barButtonItem title="Draw" id="4oE-5h-zNp">
+                        <barButtonItem systemItem="action" id="4oE-5h-zNp">
                             <connections>
-                                <action selector="enableDrawingButton:" destination="FMr-SY-H3t" id="GRK-95-JKu"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem enabled="NO" title="Undo" id="OC0-Rw-ERM">
-                            <connections>
-                                <action selector="undoButtonClicked:" destination="FMr-SY-H3t" id="wCl-j5-uuT"/>
+                                <action selector="shareButtonClicked:" destination="FMr-SY-H3t" id="sov-hh-aqO"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="8dB-SE-77i"/>
@@ -58,7 +58,6 @@
                     <connections>
                         <outlet property="scrollView" destination="YsW-7P-H3K" id="K3q-3b-9Bh"/>
                         <outlet property="spinner" destination="deW-cz-hBR" id="d67-Jm-n2h"/>
-                        <outlet property="undoButton" destination="OC0-Rw-ERM" id="gM9-6H-5tB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zdN-Vx-a3y" userLabel="First Responder" sceneMemberID="firstResponder"/>

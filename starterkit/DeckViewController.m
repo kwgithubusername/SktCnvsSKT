@@ -13,8 +13,9 @@
 
 typedef void (^CancelTouchesInViewBlock)();
 
-@interface DeckViewController () <UIScrollViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate>
+@interface DeckViewController () <UIScrollViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate, UIDocumentInteractionControllerDelegate>
 
+@property (nonatomic) UIDocumentInteractionController *documentController;
 @property (nonatomic, strong) UIImageView *imageView; // to display the image - lazily instantiate
 @property (nonatomic, strong) UIImage *image; // the image we're displaying - no instance variable
 @property (nonatomic, weak) IBOutlet UIScrollView *scrollView;
@@ -29,6 +30,121 @@ typedef void (^CancelTouchesInViewBlock)();
 @end
 
 @implementation DeckViewController
+
+#pragma mark Instagram sharing
+
+- (IBAction)shareButtonClicked:(UIBarButtonItem *)sender
+{
+    [self ShareInstagram];
+}
+
+-(void)ShareInstagram
+{
+    UIImagePickerController *imgpicker=[[UIImagePickerController alloc] init];
+    imgpicker.delegate=self;
+    [self storeimage];
+    NSURL *instagramURL = [NSURL URLWithString:@"instagram://app"];
+    if ([[UIApplication sharedApplication] canOpenURL:instagramURL])
+    {
+        
+        CGRect rect = CGRectMake(0 ,0 , 612, 612);
+        NSString  *jpgPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/15717.ig"];
+        
+        NSURL *igImageHookFile = [[NSURL alloc] initWithString:[[NSString alloc] initWithFormat:@"file://%@", jpgPath]];
+        self.documentController = [[UIDocumentInteractionController alloc] init];
+        self.documentController.UTI = @"com.instagram.photo";
+        self.documentController.delegate=self;
+        self.documentController = [self setupControllerWithURL:igImageHookFile usingDelegate:self];
+        self.documentController=[UIDocumentInteractionController interactionControllerWithURL:igImageHookFile];
+        self.documentController.delegate=self;
+        [self.documentController presentOpenInMenuFromRect: rect    inView: self.view animated: YES ];
+        //  [[UIApplication sharedApplication] openURL:instagramURL];
+    }
+    else
+    {
+        //   NSLog(@"instagramImageShare");
+        UIAlertView *errorToShare = [[UIAlertView alloc] initWithTitle:@"Instagram unavailable " message:@"You need to install Instagram in your device in order to share this image" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        
+        errorToShare.tag=3010;
+        [errorToShare show];
+    }
+}
+
+- (UIImage *)captureView:(UIView *)view
+{
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    
+    UIGraphicsBeginImageContext(screenRect.size);
+    
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    [[UIColor blackColor] set];
+    CGContextFillRect(ctx, screenRect);
+    
+    [view.layer renderInContext:ctx];
+    
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    
+    return newImage;
+}
+
+- (void)storeimage
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,     NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *savedImagePath = [documentsDirectory stringByAppendingPathComponent:@"15717.ig"];
+    UIImage *NewImg=[self resizedImage:[self captureView:self.view] inImage:CGRectMake(0, 0, 612, 612) ];
+    NSData *imageData = UIImagePNGRepresentation(NewImg);
+    [imageData writeToFile:savedImagePath atomically:NO];
+}
+
+-(UIImage*)resizedImage:(UIImage *)image inImage:(CGRect)thumbRect
+{
+    CGImageRef imageRef = [image CGImage];
+    CGImageAlphaInfo alphaInfo = CGImageGetAlphaInfo(imageRef);
+    
+    // There's a wierdness with kCGImageAlphaNone and CGBitmapContextCreate
+    // see Supported Pixel Formats in the Quartz 2D Programming Guide
+    // Creating a Bitmap Graphics Context section
+    // only RGB 8 bit images with alpha of kCGImageAlphaNoneSkipFirst, kCGImageAlphaNoneSkipLast, kCGImageAlphaPremultipliedFirst,
+    // and kCGImageAlphaPremultipliedLast, with a few other oddball image kinds are supported
+    // The images on input here are likely to be png or jpeg files
+    if (alphaInfo == kCGImageAlphaNone)
+        alphaInfo = kCGImageAlphaNoneSkipLast;
+    
+    // Build a bitmap context that's the size of the thumbRect
+    CGContextRef bitmap = CGBitmapContextCreate(
+                                                NULL,
+                                                thumbRect.size.width,       // width
+                                                thumbRect.size.height,      // height
+                                                CGImageGetBitsPerComponent(imageRef),   // really needs to always be 8
+                                                4 * thumbRect.size.width,   // rowbytes
+                                                CGImageGetColorSpace(imageRef),
+                                                (CGBitmapInfo)alphaInfo
+                                                );
+    
+    // Draw into the context, this scales the image
+    CGContextDrawImage(bitmap, thumbRect, imageRef);
+    
+    // Get an image from the context and a UIImage
+    CGImageRef  ref = CGBitmapContextCreateImage(bitmap);
+    UIImage*    result = [UIImage imageWithCGImage:ref];
+    
+    CGContextRelease(bitmap);   // ok if NULL
+    CGImageRelease(ref);
+    
+    return result;
+}
+
+- (UIDocumentInteractionController *) setupControllerWithURL: (NSURL*) fileURL usingDelegate: (id <UIDocumentInteractionControllerDelegate>) interactionDelegate
+{
+    
+    UIDocumentInteractionController *interactionController = [UIDocumentInteractionController interactionControllerWithURL:fileURL];
+    interactionController.delegate = self;
+    
+    return interactionController;
+}
 
 /* ATTEMPT TO FADE THE NAV BAR
  - (void)viewDidAppear:(BOOL)animated {
@@ -233,7 +349,7 @@ typedef void (^CancelTouchesInViewBlock)();
 }
 
 - (IBAction)enableDrawingButton:(UIBarButtonItem *)sender
-{   NSLog(@"Drawing enabled:%hhd", self.drawingEnabled);
+{   //NSLog(@"Drawing enabled:%hhd", self.drawingEnabled);
     if (self.drawingEnabled == NO)
     {
         for (TouchDrawView *tdv in self.view.subviews)
@@ -244,7 +360,7 @@ typedef void (^CancelTouchesInViewBlock)();
                 tdv.drawingEnabled = YES;
                 self.undoButton.enabled = YES;
                 self.touchDrawViewCreated = YES;
-                NSLog(@"A TouchDrawView already exists:%d", [self.view.subviews count]);
+                //NSLog(@"A TouchDrawView already exists:%d", [self.view.subviews count]);
             }
         }
         
@@ -299,6 +415,7 @@ typedef void (^CancelTouchesInViewBlock)();
 #pragma mark Setup
 
 - (void)viewDidLoad {
+#warning too many lines of code here!
     [super viewDidLoad];
     self.drawingEnabled = NO;
     self.touchDrawViewCreated = NO;
@@ -349,6 +466,7 @@ typedef void (^CancelTouchesInViewBlock)();
         self.currentView = [[UIView alloc] initWithFrame:self.view.frame];
         self.currentView = v;
         [self.view addSubview:self.currentView];
+        //NSLog(@"Numberofsubviews: %d", [[self.view subviews] count]);
     }
     
     if ([self.editor isEqualToString:@"truck"])
@@ -359,6 +477,7 @@ typedef void (^CancelTouchesInViewBlock)();
         self.currentView = [[UIView alloc] initWithFrame:self.view.frame];
         self.currentView = v;
         [self.view addSubview:self.currentView];
+        //NSLog(@"Numberofsubviews: %d", [[self.view subviews] count]);
     }
     
     if ([self.editor isEqualToString:@"wheel"])

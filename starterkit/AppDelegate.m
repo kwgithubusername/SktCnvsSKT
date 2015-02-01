@@ -28,6 +28,11 @@
     return YES;
     
 }
+
+-(NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
+{
+    return UIInterfaceOrientationPortrait | UIInterfaceOrientationPortraitUpsideDown;
+}
 /*
 -(void)onNotification:(NSNotification*)notification
 {
