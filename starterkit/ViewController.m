@@ -28,28 +28,28 @@
         if ([segue.identifier isEqualToString: @"deckEditor"])
         {
             DeckViewController *dvc = (DeckViewController *)segue.destinationViewController;
-            dvc.editor = @"deck";
+            dvc.editorString = @"deck";
             NSLog(@"deck selected");
             
         }
         if ([segue.identifier isEqualToString:@"truckEditor"])
         {
             DeckViewController *dvc = (DeckViewController *)segue.destinationViewController;
-            dvc.editor = @"truck";
+            dvc.editorString = @"truck";
             NSLog(@"truck selected");
             
         }
         if ([segue.identifier isEqualToString:@"wheelEditor"])
         {
             DeckViewController *dvc = (DeckViewController *)segue.destinationViewController;
-            dvc.editor = @"wheel";
+            dvc.editorString = @"wheel";
             NSLog(@"wheel selected");
             
         }
         if ([segue.identifier isEqualToString:@"teeEditor"])
         {
             DeckViewController *dvc = (DeckViewController *)segue.destinationViewController;
-            dvc.editor = @"tee";
+            dvc.editorString = @"tee";
             NSLog(@"tee selected");
             
         }

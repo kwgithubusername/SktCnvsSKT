@@ -25,6 +25,7 @@ typedef void (^CancelTouchesInViewBlock)();
 @property BOOL touchDrawViewCreated;
 @property (nonatomic, copy) CancelTouchesInViewBlock cancelTouchesInViewBlock;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *undoButton;
+@property (nonatomic) CGRect imageForInstagramRect;
 
 
 @end
@@ -72,13 +73,16 @@ typedef void (^CancelTouchesInViewBlock)();
 
 - (UIImage *)captureView:(UIView *)view
 {
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGRect screenRect = self.imageForInstagramRect;
+    NSLog(@"origin.y in captureview is %f", screenRect.origin.y);
     
     UIGraphicsBeginImageContext(screenRect.size);
     
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     [[UIColor blackColor] set];
     CGContextFillRect(ctx, screenRect);
+    
+    CGContextTranslateCTM(ctx, 0, -screenRect.origin.y);
     
     [view.layer renderInContext:ctx];
     
@@ -383,7 +387,7 @@ typedef void (^CancelTouchesInViewBlock)();
         // Tell DeckViewController that drawing is enabled
     sender.tintColor = [UIColor redColor];
     self.drawingEnabled = YES;
-    NSLog(@"Drawing enabled:%hhd", self.drawingEnabled);
+    //NSLog(@"Drawing enabled:%hhd", self.drawingEnabled);
 
     }
     else
@@ -414,19 +418,62 @@ typedef void (^CancelTouchesInViewBlock)();
 
 #pragma mark Setup
 
-- (void)viewDidLoad {
-#warning too many lines of code here!
-    [super viewDidLoad];
-    self.drawingEnabled = NO;
-    self.touchDrawViewCreated = NO;
-    [self.spinner stopAnimating];
-    self.navigationController.toolbarHidden = NO;
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:@"imageCaptureRect"])
+    {
+        self.imageForInstagramRect = [[change objectForKey:NSKeyValueChangeNewKey] CGRectValue];
+    }
+}
+
+- (void)loadEditorView
+{
+    if ([self.editorString isEqualToString:@"deck"])
+    {
+        NSLog(@"We're making a deck");
+        self.currentView = nil;
+        DeckMakerView *v = [[DeckMakerView alloc] initWithFrame:self.view.frame];
+        self.currentView = [[UIView alloc] initWithFrame:self.view.frame];
+        self.currentView = v;
+        [v addObserver:self forKeyPath:@"imageCaptureRect" options:NSKeyValueObservingOptionNew context:NULL];
+        [self.view addSubview:self.currentView];
+        //NSLog(@"Numberofsubviews: %d", [[self.view subviews] count]);
+    }
     
-    [self.scrollView insertSubview:self.imageView atIndex:0];
+    if ([self.editorString isEqualToString:@"truck"])
+    {
+        NSLog(@"We're making a truck");
+        self.currentView = nil;
+        TruckMakerView *v = [[TruckMakerView alloc] initWithFrame:self.view.frame];
+        self.currentView = [[UIView alloc] initWithFrame:self.view.frame];
+        self.currentView = v;
+        [self.view addSubview:self.currentView];
+        //NSLog(@"Numberofsubviews: %d", [[self.view subviews] count]);
+    }
     
-    self.imageView.userInteractionEnabled = YES;
-    //    self.scrollView.userInteractionEnabled = YES;
+    if ([self.editorString isEqualToString:@"wheel"])
+    {
+        NSLog(@"We're making a wheel");
+        self.currentView = nil;
+        WheelMakerView *v = [[WheelMakerView alloc] initWithFrame:self.view.frame];
+        self.currentView = [[UIView alloc] initWithFrame:self.view.frame];
+        self.currentView = v;
+        [self.view addSubview:self.currentView];
+    }
     
+    if ([self.editorString isEqualToString:@"tee"])
+    {
+        NSLog(@"We're making a tee");
+        self.currentView = nil;
+        TeeMakerView *v = [[TeeMakerView alloc] initWithFrame:self.view.frame];
+        self.currentView = [[UIView alloc] initWithFrame:self.view.frame];
+        self.currentView = v;
+        [self.view addSubview:self.currentView];
+    }
+}
+
+- (void)addPanPinchAndRotationGestureRecognizers
+{
     UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panDetected:)];
     [self.view addGestureRecognizer:panRecognizer];
     
@@ -456,52 +503,24 @@ typedef void (^CancelTouchesInViewBlock)();
             rotationRecognizer.cancelsTouchesInView = NO;
         }
     }];
+}
 
+- (void)viewDidLoad
+{
+#warning too many lines of code here!
+    [super viewDidLoad];
+    self.drawingEnabled = NO;
+    self.touchDrawViewCreated = NO;
+    [self.spinner stopAnimating];
+    self.navigationController.toolbarHidden = NO;
     
-    if ([self.editor isEqualToString:@"deck"])
-    {
-        NSLog(@"We're making a deck");
-        self.currentView = nil;
-        DeckMakerView *v = [[DeckMakerView alloc] initWithFrame:self.view.frame];
-        self.currentView = [[UIView alloc] initWithFrame:self.view.frame];
-        self.currentView = v;
-        [self.view addSubview:self.currentView];
-        //NSLog(@"Numberofsubviews: %d", [[self.view subviews] count]);
-    }
+    [self.scrollView insertSubview:self.imageView atIndex:0];
     
-    if ([self.editor isEqualToString:@"truck"])
-    {
-        NSLog(@"We're making a truck");
-        self.currentView = nil;
-        TruckMakerView *v = [[TruckMakerView alloc] initWithFrame:self.view.frame];
-        self.currentView = [[UIView alloc] initWithFrame:self.view.frame];
-        self.currentView = v;
-        [self.view addSubview:self.currentView];
-        //NSLog(@"Numberofsubviews: %d", [[self.view subviews] count]);
-    }
-    
-    if ([self.editor isEqualToString:@"wheel"])
-    {
-        NSLog(@"We're making a wheel");
-        self.currentView = nil;
-        WheelMakerView *v = [[WheelMakerView alloc] initWithFrame:self.view.frame];
-        self.currentView = [[UIView alloc] initWithFrame:self.view.frame];
-        self.currentView = v;
-        [self.view addSubview:self.currentView];
-    }
-    
-    if ([self.editor isEqualToString:@"tee"])
-    {
-        NSLog(@"We're making a tee");
-        self.currentView = nil;
-        TeeMakerView *v = [[TeeMakerView alloc] initWithFrame:self.view.frame];
-        self.currentView = [[UIView alloc] initWithFrame:self.view.frame];
-        self.currentView = v;
-        [self.view addSubview:self.currentView];
-    }
-    
-    
-    
+    self.imageView.userInteractionEnabled = YES;
+    //    self.scrollView.userInteractionEnabled = YES;
+    [self addPanPinchAndRotationGestureRecognizers];
+
+    [self loadEditorView];
     // Do any additional setup after loading the view.
 }
 

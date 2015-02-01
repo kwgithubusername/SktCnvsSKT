@@ -10,5 +10,5 @@
 #import "DeckViewController.h"
 #import <iAd/iAd.h>
 @interface DeckMakerView : UIView <ADBannerViewDelegate>
-
+@property (nonatomic) CGRect imageCaptureRect;
 @end

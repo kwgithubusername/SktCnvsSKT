@@ -15,6 +15,6 @@
 #import "TouchDrawView.h"
 typedef void (^PassUndoMethodFromTouchDrawViewBlock)();
 @interface DeckViewController : UIViewController
-@property (nonatomic, weak) NSString *editor;
+@property (nonatomic, weak) NSString *editorString;
 @property (nonatomic, copy) PassUndoMethodFromTouchDrawViewBlock passUndoMethodBlock;
 @end
