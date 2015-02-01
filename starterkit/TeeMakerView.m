@@ -171,6 +171,7 @@
         CGContextSetBlendMode(ctx, kCGBlendModeNormal);
         [path stroke];
 
+    self.imageCaptureRect = CGRectMake(0, 75*scaleFactor, width, width);
     
     _adBanner = [[ADBannerView alloc] initWithFrame:CGRectMake(0,self.bounds.size.height-45, 320, 50)];
     _adBanner.delegate = self;

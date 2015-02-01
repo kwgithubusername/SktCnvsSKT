@@ -159,7 +159,7 @@
     // Redraw the path, as it has been changed to white
     [path stroke];
     
-    self.imageCaptureRect = CGRectMake(0, height/2-(168*scaleFactor)+2, width, width);
+    self.imageCaptureRect = CGRectMake(0, height/2-(168*scaleFactor)+1*scaleFactor, width, width);
     UIBezierPath *markerPath = [[UIBezierPath alloc] init];
     [markerPath moveToPoint:CGPointMake(0, height/2-(168*scaleFactor))];
     [markerPath addLineToPoint:CGPointMake(500, height/2-(168*scaleFactor))];
@@ -167,7 +167,6 @@
     NSLog(@"width is %f", width);
     _adBanner = [[ADBannerView alloc] initWithFrame:CGRectMake(0,self.bounds.size.height-45, 320, 50)];
     _adBanner.delegate = self;
-    
 }
 
 @end

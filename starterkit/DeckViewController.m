@@ -433,6 +433,7 @@ typedef void (^CancelTouchesInViewBlock)();
         NSLog(@"We're making a deck");
         self.currentView = nil;
         DeckMakerView *v = [[DeckMakerView alloc] initWithFrame:self.view.frame];
+        v.tag = 999;
         self.currentView = [[UIView alloc] initWithFrame:self.view.frame];
         self.currentView = v;
         [v addObserver:self forKeyPath:@"imageCaptureRect" options:NSKeyValueObservingOptionNew context:NULL];
@@ -445,8 +446,10 @@ typedef void (^CancelTouchesInViewBlock)();
         NSLog(@"We're making a truck");
         self.currentView = nil;
         TruckMakerView *v = [[TruckMakerView alloc] initWithFrame:self.view.frame];
+        v.tag = 999;
         self.currentView = [[UIView alloc] initWithFrame:self.view.frame];
         self.currentView = v;
+        [v addObserver:self forKeyPath:@"imageCaptureRect" options:NSKeyValueObservingOptionNew context:NULL];
         [self.view addSubview:self.currentView];
         //NSLog(@"Numberofsubviews: %d", [[self.view subviews] count]);
     }
@@ -456,8 +459,10 @@ typedef void (^CancelTouchesInViewBlock)();
         NSLog(@"We're making a wheel");
         self.currentView = nil;
         WheelMakerView *v = [[WheelMakerView alloc] initWithFrame:self.view.frame];
+        v.tag = 999;
         self.currentView = [[UIView alloc] initWithFrame:self.view.frame];
         self.currentView = v;
+        [v addObserver:self forKeyPath:@"imageCaptureRect" options:NSKeyValueObservingOptionNew context:NULL];
         [self.view addSubview:self.currentView];
     }
     
@@ -466,8 +471,10 @@ typedef void (^CancelTouchesInViewBlock)();
         NSLog(@"We're making a tee");
         self.currentView = nil;
         TeeMakerView *v = [[TeeMakerView alloc] initWithFrame:self.view.frame];
+        v.tag = 999;
         self.currentView = [[UIView alloc] initWithFrame:self.view.frame];
         self.currentView = v;
+        [v addObserver:self forKeyPath:@"imageCaptureRect" options:NSKeyValueObservingOptionNew context:NULL];
         [self.view addSubview:self.currentView];
     }
 }
@@ -524,7 +531,17 @@ typedef void (^CancelTouchesInViewBlock)();
     // Do any additional setup after loading the view.
 }
 
-
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    for (UIView *subview in self.view.subviews)
+    {
+        if (subview.tag == 999)
+        {
+            [subview removeObserver:self forKeyPath:@"imageCaptureRect"];
+        }
+    }
+}
 
 
 

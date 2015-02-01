@@ -11,5 +11,5 @@
 #import <iAd/iAd.h>
 
 @interface TeeMakerView : UIView <ADBannerViewDelegate>
-
+@property (nonatomic) CGRect imageCaptureRect;
 @end

@@ -11,6 +11,6 @@
 #import <iAd/iAd.h>
 
 @interface WheelMakerView : UIView <ADBannerViewDelegate>
-
+@property (nonatomic) CGRect imageCaptureRect;
 
 @end

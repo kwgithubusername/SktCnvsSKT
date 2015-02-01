@@ -10,5 +10,5 @@
 #import "DeckViewController.h"
 #import <iAd/iAd.h>
 @interface TruckMakerView : UIView <ADBannerViewDelegate>
-
+@property (nonatomic) CGRect imageCaptureRect;
 @end
