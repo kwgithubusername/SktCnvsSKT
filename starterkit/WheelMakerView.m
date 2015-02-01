@@ -79,16 +79,23 @@
 }
 
 
+-(int)scaleFactorForDevice
+{
+    return (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 2 : 1;
+}
+
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)aRect
 {
     // Drawing code
     CGFloat width = self.bounds.size.width; //width of the screen
-    CGFloat height = self.bounds.size.height; //height of the screen
+    CGFloat height = self.bounds.size.height-20; //height of the screen
+    
+    CGFloat scaleFactor = [self scaleFactorForDevice];
     
         UIBezierPath *path = [UIBezierPath bezierPathWithArcCenter:CGPointMake(width/2, height/2)
-                                                            radius:150
+                                                            radius:150*scaleFactor
                                                         startAngle:0
                                                           endAngle:180
                                                          clockwise:YES];
@@ -106,7 +113,7 @@
         // Inside circle of the wheel should be filled with white
         CGContextSetBlendMode(ctx, kCGBlendModeNormal);
         UIBezierPath *path2 = [UIBezierPath bezierPathWithArcCenter:CGPointMake(width/2, height/2)
-                                                             radius:50
+                                                             radius:50*scaleFactor
                                                          startAngle:0
                                                            endAngle:180
                                                           clockwise:YES];

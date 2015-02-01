@@ -79,6 +79,10 @@
     }
 }
 
+-(int)scaleFactorForDevice
+{
+    return (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 2 : 1;
+}
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)aRect
@@ -87,48 +91,50 @@
     // width of the screen
     CGFloat width = self.bounds.size.width;
     // height of the screen
-    CGFloat height = self.bounds.size.height;
+    CGFloat height = self.bounds.size.height-25;
+    
+    CGFloat scaleFactor = [self scaleFactorForDevice];
     
         UIBezierPath *path = [[UIBezierPath alloc] init];
     
         // left sleeve, top corner
-        CGPoint a = CGPointMake(width/2-140, height/2-40);
+        CGPoint a = CGPointMake(width/2-140*scaleFactor, height/2-40*scaleFactor);
     
         // shoulder point 1
-        CGPoint b = CGPointMake(width/2-90,a.y-60);
+        CGPoint b = CGPointMake(width/2-90*scaleFactor,a.y-60*scaleFactor);
     
         // shoulder point 2
-        CGPoint c = CGPointMake(width/2-30,a.y-80);
+        CGPoint c = CGPointMake(width/2-30*scaleFactor,a.y-80*scaleFactor);
     
         // shoulder point!2
-        CGPoint p = CGPointMake(width/2+30,c.y);
+        CGPoint p = CGPointMake(width/2+30*scaleFactor,c.y);
     
         // collar control point
-        CGPoint cp = CGPointMake(width/2, c.y+20);
+        CGPoint cp = CGPointMake(width/2, c.y+20*scaleFactor);
     
         // shoulder point !1
-        CGPoint d = CGPointMake(width/2+90,b.y);
+        CGPoint d = CGPointMake(width/2+90*scaleFactor,b.y);
     
         // right sleeve, top corner
-        CGPoint e = CGPointMake(width/2+140,a.y);
+        CGPoint e = CGPointMake(width/2+140*scaleFactor,a.y);
     
         // right sleeve, bottom corner
-        CGPoint f = CGPointMake(width/2+95,a.y+40);
+        CGPoint f = CGPointMake(width/2+95*scaleFactor,a.y+40*scaleFactor);
     
         // armpit of sleeve
-        CGPoint g = CGPointMake(width/2+75,e.y+15);
+        CGPoint g = CGPointMake(width/2+75*scaleFactor,e.y+15*scaleFactor);
     
         // right side
-        CGPoint h = CGPointMake(g.x, g.y+180);
+        CGPoint h = CGPointMake(g.x, g.y+180*scaleFactor);
     
         // bottom
-        CGPoint i = CGPointMake(width/2-75,h.y);
+        CGPoint i = CGPointMake(width/2-75*scaleFactor,h.y);
     
         // left side
-        CGPoint j = CGPointMake(width/2-75,g.y);
+        CGPoint j = CGPointMake(width/2-75*scaleFactor,g.y);
     
         // left sleeve, bottom corner
-        CGPoint k = CGPointMake(width/2-95,f.y);
+        CGPoint k = CGPointMake(width/2-95*scaleFactor,f.y);
     
         [path moveToPoint:a];
         [path addLineToPoint:b];

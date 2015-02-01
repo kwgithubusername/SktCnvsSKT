@@ -79,30 +79,37 @@
     }
 }
 
+-(int)scaleFactorForDevice
+{
+    return (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 2 : 1;
+}
+
 - (void)drawRect:(CGRect)aRect {
     NSLog(@"drawRect called");
     CGFloat width = self.bounds.size.width; //width of the screen
     CGFloat height = self.bounds.size.height; //height of the screen
-
+    
+    CGFloat scaleFactor = [self scaleFactorForDevice];
+    
         UIBezierPath *path = [[UIBezierPath alloc] init];
     
         // top left corner
-        CGPoint a = CGPointMake(width/2-140, height/2-40);
+        CGPoint a = CGPointMake(width/2-140*scaleFactor, height/2-40*scaleFactor);
     
         // top axle
-        CGPoint b = CGPointMake(width/2+140,a.y);
+        CGPoint b = CGPointMake(width/2+140*scaleFactor,a.y);
     
         // axle diameter, right side
-        CGPoint c = CGPointMake(b.x,b.y+20);
+        CGPoint c = CGPointMake(b.x,b.y+20*scaleFactor);
     
         // starting arc towards pivot cup
-        CGPoint d = CGPointMake(b.x-50,b.y+30);
+        CGPoint d = CGPointMake(b.x-50*scaleFactor,b.y+30*scaleFactor);
     
         // control point for arc towards pivot cup
-        CGPoint e = CGPointMake(b.x-100,b.y+43);
+        CGPoint e = CGPointMake(b.x-100*scaleFactor,b.y+43*scaleFactor);
     
         // point at pivot cup
-        CGPoint f = CGPointMake(width/2+15,b.y+65);
+        CGPoint f = CGPointMake(width/2+15*scaleFactor,b.y+65*scaleFactor);
     
         [path moveToPoint:a];
         [path addLineToPoint:b];
@@ -111,16 +118,16 @@
         [path addQuadCurveToPoint:f controlPoint:e];
         
         // !point at pivot cup
-        [path addLineToPoint:CGPointMake(width/2-15,f.y)];
+        [path addLineToPoint:CGPointMake(width/2-15*scaleFactor,f.y)];
     
         // !control point + arc towards pivot cup
-        [path addQuadCurveToPoint:CGPointMake(width/2-90,d.y) controlPoint:CGPointMake(width/2-40,e.y)];
+        [path addQuadCurveToPoint:CGPointMake(width/2-90*scaleFactor,d.y) controlPoint:CGPointMake(width/2-40*scaleFactor,e.y)];
     
         // !starting arc towards pivot cup
-        [path addLineToPoint:CGPointMake(width/2-140,c.y)];
+        [path addLineToPoint:CGPointMake(width/2-140*scaleFactor,c.y)];
     
         // axle diameter, right side
-        [path addLineToPoint:CGPointMake(width/2-140,b.y)];
+        [path addLineToPoint:CGPointMake(width/2-140*scaleFactor,b.y)];
         [path closePath];
     
         // draw the path
@@ -132,28 +139,28 @@
         UIBezierPath *path2 = [[UIBezierPath alloc] init];
     
         // baseplate length1
-        CGPoint g = CGPointMake(width/2+25,f.y);
+        CGPoint g = CGPointMake(width/2+25*scaleFactor,f.y);
     
         // baseplate height1
-        CGPoint h = CGPointMake(g.x,g.y+10);
+        CGPoint h = CGPointMake(g.x,g.y+10*scaleFactor);
     
         // baseplate length2
-        CGPoint i = CGPointMake(g.x+70,h.y+10);
+        CGPoint i = CGPointMake(g.x+70*scaleFactor,h.y+10*scaleFactor);
     
         // baseplate height2
-        CGPoint j = CGPointMake(i.x,i.y+10);
+        CGPoint j = CGPointMake(i.x,i.y+10*scaleFactor);
     
         // baseplate bottom
-        CGPoint k = CGPointMake(width/2-90,j.y);
+        CGPoint k = CGPointMake(width/2-90*scaleFactor,j.y);
     
         // !baseplate height2
-        CGPoint l = CGPointMake(width/2-90,i.y);
+        CGPoint l = CGPointMake(width/2-90*scaleFactor,i.y);
     
         // !baseplate length2
-        CGPoint m = CGPointMake(width/2-25,h.y);
+        CGPoint m = CGPointMake(width/2-25*scaleFactor,h.y);
     
         // !basepplate height1
-        CGPoint n = CGPointMake(width/2-25,g.y);
+        CGPoint n = CGPointMake(width/2-25*scaleFactor,g.y);
     
         [path2 moveToPoint:g];
         [path2 addLineToPoint:h];
