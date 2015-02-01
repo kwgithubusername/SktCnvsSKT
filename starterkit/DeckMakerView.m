@@ -75,12 +75,20 @@
     }
 }
 
+-(int)scaleFactorForDevice
+{
+    return (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 2 : 1;
+}
+
 - (void)drawRect:(CGRect)aRect
 {
     NSLog(@"drawRect called");
     CGFloat width = self.bounds.size.width; //width of the screen
-    CGFloat height = self.bounds.size.height; //height of the screen
+    CGFloat height = self.bounds.size.height-70; //height of the screen
     NSLog(@"%f", height);
+    
+    CGFloat scaleFactor = [self scaleFactorForDevice];
+    
     // widths: iphone 6: 375; iphone 6+: 414; 320 other models
         UIBezierPath *path = [[UIBezierPath alloc] init];
     
@@ -89,20 +97,20 @@
         //  Create scale factor for screen size- truck is too small
 
         //top left corner
-        [path moveToPoint:CGPointMake(width/2-50, height/2-90)];
-        [path addQuadCurveToPoint:CGPointMake(width/2,height/2-168) controlPoint:CGPointMake(width/2-50,height/2-168)];
+        [path moveToPoint:CGPointMake(width/2-(50*scaleFactor), height/2-(90*scaleFactor))];
+        [path addQuadCurveToPoint:CGPointMake(width/2,height/2-(168*scaleFactor)) controlPoint:CGPointMake(width/2-(50*scaleFactor),height/2-(168*scaleFactor))];
     
         //top right corner
-        [path addQuadCurveToPoint:CGPointMake(width/2+50,height/2-90) controlPoint:CGPointMake(width/2+50,height/2-168)];
+        [path addQuadCurveToPoint:CGPointMake(width/2+(50*scaleFactor),height/2-(90*scaleFactor)) controlPoint:CGPointMake(width/2+(50*scaleFactor),height/2-(168*scaleFactor))];
     
         //right side
-        [path addLineToPoint:CGPointMake(width/2+50, height/2+140)];
+        [path addLineToPoint:CGPointMake(width/2+(50*scaleFactor), height/2+(140*scaleFactor))];
     
         //bottom right corner
-        [path addQuadCurveToPoint:CGPointMake(width/2,height/2+218) controlPoint:CGPointMake(width/2+50,height/2+218)];
+        [path addQuadCurveToPoint:CGPointMake(width/2,height/2+(218*scaleFactor)) controlPoint:CGPointMake(width/2+(50*scaleFactor),height/2+(218*scaleFactor))];
     
         //bottom left corner
-        [path addQuadCurveToPoint:CGPointMake(width/2-50,height/2+140) controlPoint:CGPointMake(width/2-50,height/2+218)];
+        [path addQuadCurveToPoint:CGPointMake(width/2-(50*scaleFactor),height/2+(140*scaleFactor)) controlPoint:CGPointMake(width/2-(50*scaleFactor),height/2+(218*scaleFactor))];
         [path closePath];
         
         [[UIColor blackColor] setStroke];
@@ -123,66 +131,26 @@
         CGContextSetBlendMode(ctx, kCGBlendModeNormal);
         
         // Draw bolts
-        UIBezierPath *bolt1 = [UIBezierPath bezierPathWithArcCenter:CGPointMake(width/2-10, height/2-90)
-                                                             radius:1
-                                                         startAngle:0
-                                                           endAngle:180
-                                                          clockwise:YES];
-        UIBezierPath *bolt2 = [UIBezierPath bezierPathWithArcCenter:CGPointMake(width/2+10, height/2-90)
-                                                             radius:1
-                                                         startAngle:0
-                                                           endAngle:180
-                                                          clockwise:YES];
-        UIBezierPath *bolt3 = [UIBezierPath bezierPathWithArcCenter:CGPointMake(width/2-10, height/2-65)
-                                                             radius:1
-                                                         startAngle:0
-                                                           endAngle:180
-                                                          clockwise:YES];
-        UIBezierPath *bolt4 = [UIBezierPath bezierPathWithArcCenter:CGPointMake(width/2+10, height/2-65)
-                                                             radius:1
-                                                         startAngle:0
-                                                           endAngle:180
-                                                          clockwise:YES];
-        UIBezierPath *bolt5 = [UIBezierPath bezierPathWithArcCenter:CGPointMake(width/2-10, height/2+140-25)
-                                                             radius:1
-                                                         startAngle:0
-                                                           endAngle:180
-                                                          clockwise:YES];
-        UIBezierPath *bolt6 = [UIBezierPath bezierPathWithArcCenter:CGPointMake(width/2+10, height/2+140-25)
-                                                             radius:1
-                                                         startAngle:0
-                                                           endAngle:180
-                                                          clockwise:YES];
-        UIBezierPath *bolt7 = [UIBezierPath bezierPathWithArcCenter:CGPointMake(width/2-10, height/2+140)
-                                                             radius:1
-                                                         startAngle:0
-                                                           endAngle:180
-                                                          clockwise:YES];
-        UIBezierPath *bolt8 = [UIBezierPath bezierPathWithArcCenter:CGPointMake(width/2+10, height/2+140)
-                                                             radius:1
-                                                         startAngle:0
-                                                           endAngle:180
-                                                          clockwise:YES];
-        [[UIColor blackColor] setFill];
+    NSArray *boltCGPointsArray = [[NSArray alloc] initWithObjects:[NSValue valueWithCGPoint:CGPointMake(width/2-10*scaleFactor, height/2-90*scaleFactor)],
+                                                                      [NSValue valueWithCGPoint:CGPointMake(width/2+10*scaleFactor, height/2-90*scaleFactor)],
+                                                                      [NSValue valueWithCGPoint:CGPointMake(width/2-10*scaleFactor, height/2-65*scaleFactor)],
+                                                                      [NSValue valueWithCGPoint:CGPointMake(width/2+10*scaleFactor, height/2-65*scaleFactor)],
+                                                                      [NSValue valueWithCGPoint:CGPointMake(width/2-10*scaleFactor, height/2+140*scaleFactor-25*scaleFactor)],
+                                                                      [NSValue valueWithCGPoint:CGPointMake(width/2+10*scaleFactor, height/2+140*scaleFactor-25*scaleFactor)],
+                                                                      [NSValue valueWithCGPoint:CGPointMake(width/2-10*scaleFactor, height/2+140*scaleFactor)],
+                                                                      [NSValue valueWithCGPoint:CGPointMake(width/2+10*scaleFactor, height/2+140*scaleFactor)],nil];
+    [[UIColor blackColor] setFill];
     
-        // Fill in bolts
-        [bolt1 stroke];
-        [bolt1 fill];
-        [bolt2 stroke];
-        [bolt2 fill];
-        [bolt3 stroke];
-        [bolt3 fill];
-        [bolt4 stroke];
-        [bolt4 fill];
-        [bolt5 stroke];
-        [bolt5 fill];
-        [bolt6 stroke];
-        [bolt6 fill];
-        [bolt7 stroke];
-        [bolt7 fill];
-        [bolt8 stroke];
-        [bolt8 fill];
-    
+    for (NSValue *value in boltCGPointsArray)
+    {
+        UIBezierPath *bolt = [UIBezierPath bezierPathWithArcCenter:[value CGPointValue]
+                                                            radius:1*scaleFactor
+                                                        startAngle:0
+                                                          endAngle:180
+                                                         clockwise:YES];
+        [bolt stroke];
+        [bolt fill];
+    }
         // Attempt to draw shadow
    /*     CGContextRef ctx2 = UIGraphicsGetCurrentContext();
         CGContextSetShadowWithColor(ctx2, CGSizeMake(-2,+2), 5, [[UIColor blackColor] CGColor]);
