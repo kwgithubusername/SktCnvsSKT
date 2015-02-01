@@ -534,11 +534,14 @@ typedef void (^CancelTouchesInViewBlock)();
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    for (UIView *subview in self.view.subviews)
+    if ([self.navigationController.viewControllers indexOfObject:self]==NSNotFound)
     {
-        if (subview.tag == 999)
+        for (UIView *subview in self.view.subviews)
         {
-            [subview removeObserver:self forKeyPath:@"imageCaptureRect"];
+            if (subview.tag == 999)
+            {
+                [subview removeObserver:self forKeyPath:@"imageCaptureRect"];
+            }
         }
     }
 }
