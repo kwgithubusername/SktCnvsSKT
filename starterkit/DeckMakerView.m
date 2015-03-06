@@ -94,11 +94,13 @@
 -(int)adjustedHeightForDevice
 {
     return (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? self.bounds.size.width : self.bounds.size.height-100;
+//    return (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? self.bounds.size.width : self.bounds.size.width;
 }
 
 -(int)adjustedWidthForDevice
 {
     return (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? self.bounds.size.width : self.bounds.size.width+70;
+//    return (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? self.bounds.size.width : self.bounds.size.width;
 }
 
 
@@ -181,16 +183,14 @@
     // Redraw the path, as it has been changed to white
     [path stroke];
     
-    CGFloat adjustedXOrigin = [self adjustedXOriginForDevice];
-    CGFloat adjustedYOrigin = [self adjustedYOriginForDevice];
-    CGFloat adjustedHeight = [self adjustedHeightForDevice];
-    CGFloat adjustedWidth = [self adjustedWidthForDevice];
-    self.imageCaptureRect = CGRectMake(adjustedXOrigin, adjustedYOrigin, adjustedWidth, adjustedHeight);
-    UIBezierPath *markerPath = [[UIBezierPath alloc] init];
-    [markerPath moveToPoint:CGPointMake(0, height/2-(168*scaleFactor))];
-    [markerPath addLineToPoint:CGPointMake(500, height/2-(168*scaleFactor))];
-    //[markerPath stroke];
-    NSLog(@"width is %f", width);
+//    CGFloat adjustedXOrigin = [self adjustedXOriginForDevice];
+//    CGFloat adjustedYOrigin = [self adjustedYOriginForDevice];
+//    CGFloat adjustedHeight = [self adjustedHeightForDevice];
+//    CGFloat adjustedWidth = [self adjustedWidthForDevice];
+//    NSLog(@"Adjusted width and height should be roughly the same for this to work: width %f, height %f", adjustedWidth, adjustedHeight);
+//    self.imageCaptureRect = CGRectMake(adjustedXOrigin, adjustedYOrigin, adjustedWidth, adjustedHeight);
+//    UIBezierPath *markerPath = [[UIBezierPath alloc] init];
+
     _adBanner = [[ADBannerView alloc] initWithFrame:CGRectMake(0,self.bounds.size.height-45, 320, 50)];
     _adBanner.delegate = self;
 }

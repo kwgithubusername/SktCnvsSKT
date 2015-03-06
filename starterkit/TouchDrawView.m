@@ -65,7 +65,7 @@
     //self.lastPointOfLastStroke = [touch locationInView:self];
     UIBezierPath *instanceOfLastPath = self.path;
     [self.pathArray addObject:instanceOfLastPath];
-    NSLog(@"Number of paths:%d", [self.pathArray count]);
+    //NSLog(@"Number of paths:%d", [self.pathArray count]);
         
         
     if (self.deckViewControllerProperty.passUndoMethodBlock)

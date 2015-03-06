@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9E9078AE1AAA1A6900F724A1 /* OMMColouredPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E9078AB1AAA1A6900F724A1 /* OMMColouredPath.m */; };
+		9E9078AF1AAA1A6A00F724A1 /* OMMTouchableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E9078AD1AAA1A6900F724A1 /* OMMTouchableView.m */; };
 		9EC9BF1F1A35EE2A0050FBE2 /* Contents.json in Resources */ = {isa = PBXBuildFile; fileRef = 9EC9BF0B1A35EE2A0050FBE2 /* Contents.json */; };
 		9EC9BF201A35EE2A0050FBE2 /* Icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EC9BF0C1A35EE2A0050FBE2 /* Icon-40.png */; };
 		9EC9BF211A35EE2A0050FBE2 /* Icon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EC9BF0D1A35EE2A0050FBE2 /* Icon-40@2x.png */; };
@@ -61,6 +63,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9E9078AA1AAA1A6900F724A1 /* OMMColouredPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMMColouredPath.h; sourceTree = "<group>"; };
+		9E9078AB1AAA1A6900F724A1 /* OMMColouredPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMMColouredPath.m; sourceTree = "<group>"; };
+		9E9078AC1AAA1A6900F724A1 /* OMMTouchableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMMTouchableView.h; sourceTree = "<group>"; };
+		9E9078AD1AAA1A6900F724A1 /* OMMTouchableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMMTouchableView.m; sourceTree = "<group>"; };
 		9EC9BF0B1A35EE2A0050FBE2 /* Contents.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Contents.json; sourceTree = "<group>"; };
 		9EC9BF0C1A35EE2A0050FBE2 /* Icon-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-40.png"; sourceTree = "<group>"; };
 		9EC9BF0D1A35EE2A0050FBE2 /* Icon-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-40@2x.png"; sourceTree = "<group>"; };
@@ -137,6 +143,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9E9078B01AAA1A7800F724A1 /* TouchDraw */ = {
+			isa = PBXGroup;
+			children = (
+				9E9078AA1AAA1A6900F724A1 /* OMMColouredPath.h */,
+				9E9078AB1AAA1A6900F724A1 /* OMMColouredPath.m */,
+				9E9078AC1AAA1A6900F724A1 /* OMMTouchableView.h */,
+				9E9078AD1AAA1A6900F724A1 /* OMMTouchableView.m */,
+			);
+			name = TouchDraw;
+			sourceTree = "<group>";
+		};
 		9EC9BF091A35EE2A0050FBE2 /* ios */ = {
 			isa = PBXGroup;
 			children = (
@@ -217,6 +234,7 @@
 				9ECB3A671A41D2FA006E7B32 /* Line.m */,
 				9ECB32D21A3FA9FF00A941EB /* TeeMakerView.h */,
 				9ECB32D31A3FA9FF00A941EB /* TeeMakerView.m */,
+				9E9078B01AAA1A7800F724A1 /* TouchDraw */,
 				9ECB3A691A41D34A006E7B32 /* TouchDrawView.h */,
 				9ECB3A6A1A41D34A006E7B32 /* TouchDrawView.m */,
 				9ECF1C8C1A2697DD00D2F5ED /* Images.xcassets */,
@@ -382,12 +400,14 @@
 				9ECB3A681A41D2FA006E7B32 /* Line.m in Sources */,
 				9ECB3A6B1A41D34A006E7B32 /* TouchDrawView.m in Sources */,
 				9ECF1C881A2697DD00D2F5ED /* ViewController.m in Sources */,
+				9E9078AF1AAA1A6A00F724A1 /* OMMTouchableView.m in Sources */,
 				9ECB32D41A3FA9FF00A941EB /* TeeMakerView.m in Sources */,
 				9ECB32CE1A3FA50000A941EB /* TruckMakerView.m in Sources */,
 				9ECF1CA71A26982F00D2F5ED /* DeckViewController.m in Sources */,
 				9ED7DFF01A2D0BF700A9DE54 /* DeckMakerView.m in Sources */,
 				9ECF1C851A2697DD00D2F5ED /* AppDelegate.m in Sources */,
 				9ECF1C821A2697DD00D2F5ED /* main.m in Sources */,
+				9E9078AE1AAA1A6900F724A1 /* OMMColouredPath.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

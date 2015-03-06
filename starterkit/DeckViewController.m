@@ -26,6 +26,7 @@ typedef void (^CancelTouchesInViewBlock)();
 @property (nonatomic, copy) CancelTouchesInViewBlock cancelTouchesInViewBlock;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *undoButton;
 @property (nonatomic) CGRect imageForInstagramRect;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *drawButton;
 
 
 @end
@@ -41,34 +42,35 @@ typedef void (^CancelTouchesInViewBlock)();
 
 -(void)ShareInstagram
 {
-    UIImagePickerController *imgpicker=[[UIImagePickerController alloc] init];
-    imgpicker.delegate=self;
     [self storeimage];
-    NSURL *instagramURL = [NSURL URLWithString:@"instagram://app"];
-    if ([[UIApplication sharedApplication] canOpenURL:instagramURL])
-    {
-        
-        CGRect rect = CGRectMake(0 ,0 , 612, 612);
-        NSString  *jpgPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/15717.ig"];
-        
-        NSURL *igImageHookFile = [[NSURL alloc] initWithString:[[NSString alloc] initWithFormat:@"file://%@", jpgPath]];
-        self.documentController = [[UIDocumentInteractionController alloc] init];
-        self.documentController.UTI = @"com.instagram.photo";
-        self.documentController.delegate=self;
-        self.documentController = [self setupControllerWithURL:igImageHookFile usingDelegate:self];
-        self.documentController=[UIDocumentInteractionController interactionControllerWithURL:igImageHookFile];
-        self.documentController.delegate=self;
-        [self.documentController presentOpenInMenuFromRect: rect    inView: self.view animated: YES ];
-        //  [[UIApplication sharedApplication] openURL:instagramURL];
-    }
-    else
-    {
-        //   NSLog(@"instagramImageShare");
-        UIAlertView *errorToShare = [[UIAlertView alloc] initWithTitle:@"Instagram unavailable " message:@"You need to install Instagram in your device in order to share this image" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        
-        errorToShare.tag=3010;
-        [errorToShare show];
-    }
+//    UIImagePickerController *imgpicker=[[UIImagePickerController alloc] init];
+//    imgpicker.delegate=self;
+//    [self storeimage];
+//    NSURL *instagramURL = [NSURL URLWithString:@"instagram://app"];
+//    if ([[UIApplication sharedApplication] canOpenURL:instagramURL])
+//    {
+//        
+//        CGRect rect = CGRectMake(0 ,0 , 612, 612);
+//        NSString  *jpgPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/15717.ig"];
+//        
+//        NSURL *igImageHookFile = [[NSURL alloc] initWithString:[[NSString alloc] initWithFormat:@"file://%@", jpgPath]];
+//        self.documentController = [[UIDocumentInteractionController alloc] init];
+//        self.documentController.UTI = @"com.instagram.photo";
+//        self.documentController.delegate=self;
+//        self.documentController = [self setupControllerWithURL:igImageHookFile usingDelegate:self];
+//        self.documentController=[UIDocumentInteractionController interactionControllerWithURL:igImageHookFile];
+//        self.documentController.delegate=self;
+//        [self.documentController presentOpenInMenuFromRect: rect    inView: self.view animated: YES ];
+//        //  [[UIApplication sharedApplication] openURL:instagramURL];
+//    }
+//    else
+//    {
+//        //   NSLog(@"instagramImageShare");
+//        UIAlertView *errorToShare = [[UIAlertView alloc] initWithTitle:@"Instagram unavailable " message:@"You need to install Instagram in your device in order to share this image" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//        
+//        errorToShare.tag=3010;
+//        [errorToShare show];
+//    }
 }
 
 - (UIImage *)captureView:(UIView *)view
@@ -101,6 +103,7 @@ typedef void (^CancelTouchesInViewBlock)();
     UIImage *NewImg=[self resizedImage:[self captureView:self.view] inImage:CGRectMake(0, 0, 612, 612) ];
     NSData *imageData = UIImagePNGRepresentation(NewImg);
     [imageData writeToFile:savedImagePath atomically:NO];
+    UIImageWriteToSavedPhotosAlbum(NewImg, nil, nil, nil);
 }
 
 -(UIImage*)resizedImage:(UIImage *)image inImage:(CGRect)thumbRect
@@ -182,6 +185,67 @@ typedef void (^CancelTouchesInViewBlock)();
  }
  }
  */
+#pragma mark Drawing
+
+- (IBAction)drawButtonClicked:(UIBarButtonItem *)sender
+{
+    if (self.drawingEnabled == NO)
+    {
+        for (OMMTouchableView *touchableView in self.view.subviews)
+        {
+            if (touchableView.tag == 999)
+            {
+                // A TouchDrawView already exists
+                touchableView.drawingEnabled = YES;
+                self.undoButton.enabled = YES;
+                self.touchDrawViewCreated = YES;
+                //NSLog(@"A TouchDrawView already exists:%d", [self.view.subviews count]);
+            }
+        }
+        
+        if (!self.touchDrawViewCreated)
+        {
+            // Create a TouchDrawView
+            TouchDrawView *tdv = [[TouchDrawView alloc] initWithFrame:self.view.frame];
+            [self.view addSubview:tdv];
+            tdv.tag = 999;
+            tdv.drawingEnabled = YES;
+            self.undoButton.enabled = YES;
+            tdv.deckViewControllerProperty = self; // Enables TouchDrawView to set and pass the undo block back to self
+            NSLog(@"draw view created");
+        }
+        
+        if (self.cancelTouchesInViewBlock)
+        {   // Cancel touches
+            self.cancelTouchesInViewBlock();
+        }
+        // Tell DeckViewController that drawing is enabled
+        sender.tintColor = [UIColor redColor];
+        self.drawingEnabled = YES;
+        //NSLog(@"Drawing enabled:%hhd", self.drawingEnabled);
+        
+    }
+    else
+    {NSLog(@"Drawing enabled is YES");
+        for (TouchDrawView *tdv in self.view.subviews)
+        {
+            if (tdv.tag == 999)
+            {   // Disable drawing for TouchDrawView
+                tdv.drawingEnabled = NO;
+                self.undoButton.enabled = NO;
+            }
+        }
+        
+        if (self.cancelTouchesInViewBlock)
+        {   // Enable touches
+            self.cancelTouchesInViewBlock();
+        }
+        sender.tintColor = [UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0];
+        self.drawingEnabled = NO;
+    }
+
+}
+
 #pragma mark View and Image Management
 
 -(void)setScrollView:(UIScrollView *)scrollView
@@ -244,56 +308,6 @@ typedef void (^CancelTouchesInViewBlock)();
 
 #pragma mark Add Photo
 
-/*
- - (void) openCamera
- {
- DBCameraContainerViewController *cameraContainer = [[DBCameraContainerViewController alloc] initWithDelegate:self];
- [cameraContainer setFullScreenMode];
- 
- UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:cameraContainer];
- [nav setNavigationBarHidden:YES];
- [self presentViewController:nav animated:YES completion:nil];
- }
- 
- - (void) openCameraWithoutSegue
- {
- DBCameraViewController *cameraController = [DBCameraViewController initWithDelegate:self];
- [cameraController setUseCameraSegue:NO];
- 
- DBCameraContainerViewController *container = [[DBCameraContainerViewController alloc] initWithDelegate:self];
- [container setCameraViewController:cameraController];
- [container setFullScreenMode];
- 
- UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:container];
- [nav setNavigationBarHidden:YES];
- [self presentViewController:nav animated:YES completion:nil];
- }
- 
- - (void) openCameraWithoutContainer
- {
- UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:[DBCameraViewController initWithDelegate:self]];
- [nav setNavigationBarHidden:YES];
- [self presentViewController:nav animated:YES completion:nil];
- }
- 
- //Use your captured image
- #pragma mark - DBCameraViewControllerDelegate
- 
- - (void) camera:(id)cameraViewController didFinishWithImage:(UIImage *)image withMetadata:(NSDictionary *)metadata
- {self.image = nil;
- //DetailViewController *detail = [[DetailViewController alloc] init];
- //[detail setDetailImage:image];
- self.image = image;
- // [self.navigationController pushViewController:detail animated:NO];
- [cameraViewController restoreFullScreenMode];
- [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
- }
- 
- - (void) dismissCamera:(id)cameraViewController{
- [self dismissViewControllerAnimated:YES completion:nil];
- [cameraViewController restoreFullScreenMode];
- }
- */
 - (IBAction)saveImage:(UIBarButtonItem *)sender {
     
     //UIImageWriteToSavedPhotosAlbum(imageToBeSaved, nil, nil, nil);
@@ -302,15 +316,19 @@ typedef void (^CancelTouchesInViewBlock)();
 - (IBAction)addPhoto:(UIBarButtonItem *)sender
 {   [self.spinner startAnimating];
     if (![[self class] canAddPhoto])
-    {UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No camera detected" message:@"This device does not have a camera." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-        [alert show];     [self.spinner stopAnimating];} else {
-            //  [self openCamera];}
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No camera detected" message:@"This device does not have a camera." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+        [alert show];
+        [self.spinner stopAnimating];
+    } else
+    {
             UIImagePickerController *uiipc = [[UIImagePickerController alloc] init];
             uiipc.delegate = self;
             uiipc.mediaTypes = @[(NSString *)kUTTypeImage];
             uiipc.sourceType = UIImagePickerControllerSourceTypeCamera;
             uiipc.allowsEditing = YES;
-            [self presentViewController:uiipc animated:YES completion:NULL];}
+            [self presentViewController:uiipc animated:YES completion:NULL];
+    }
     
 }
 
@@ -354,61 +372,7 @@ typedef void (^CancelTouchesInViewBlock)();
 
 - (IBAction)enableDrawingButton:(UIBarButtonItem *)sender
 {   //NSLog(@"Drawing enabled:%hhd", self.drawingEnabled);
-    if (self.drawingEnabled == NO)
-    {
-        for (TouchDrawView *tdv in self.view.subviews)
-        {
-            if (tdv.tag == 999)
-            {
-                // A TouchDrawView already exists
-                tdv.drawingEnabled = YES;
-                self.undoButton.enabled = YES;
-                self.touchDrawViewCreated = YES;
-                //NSLog(@"A TouchDrawView already exists:%d", [self.view.subviews count]);
-            }
-        }
-        
-        if (!self.touchDrawViewCreated)
-        {
-            // Create a TouchDrawView
-            TouchDrawView *tdv = [[TouchDrawView alloc] initWithFrame:self.view.frame];
-            [self.view addSubview:tdv];
-            tdv.tag = 999;
-            tdv.drawingEnabled = YES;
-            self.undoButton.enabled = YES;
-            tdv.deckViewControllerProperty = self; // Enables TouchDrawView to set and pass the undo block back to self
-            NSLog(@"draw view created");
-        }
-
-        if (self.cancelTouchesInViewBlock)
-        {   // Cancel touches
-            self.cancelTouchesInViewBlock();
-        }
-        // Tell DeckViewController that drawing is enabled
-    sender.tintColor = [UIColor redColor];
-    self.drawingEnabled = YES;
-    //NSLog(@"Drawing enabled:%hhd", self.drawingEnabled);
-
     }
-    else
-    {NSLog(@"Drawing enabled is YES");
-        for (TouchDrawView *tdv in self.view.subviews)
-        {
-            if (tdv.tag == 999)
-            {   // Disable drawing for TouchDrawView
-                tdv.drawingEnabled = NO;
-                self.undoButton.enabled = NO;
-            }
-        }
-        
-        if (self.cancelTouchesInViewBlock)
-        {   // Enable touches
-            self.cancelTouchesInViewBlock();
-        }
-       sender.tintColor = [UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0];
-       self.drawingEnabled = NO;
-    }
-}
 - (IBAction)undoButtonClicked:(UIBarButtonItem *)sender
 {
     if (self.passUndoMethodBlock)
@@ -514,7 +478,6 @@ typedef void (^CancelTouchesInViewBlock)();
 
 - (void)viewDidLoad
 {
-#warning too many lines of code here!
     [super viewDidLoad];
     self.drawingEnabled = NO;
     self.touchDrawViewCreated = NO;

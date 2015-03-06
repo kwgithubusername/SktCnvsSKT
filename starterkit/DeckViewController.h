@@ -12,7 +12,7 @@
 #import "WheelMakerView.h"
 #import "TeeMakerView.h"
 #import "ViewController.h"
-#import "TouchDrawView.h"
+#import "OMMTouchableView.h"
 typedef void (^PassUndoMethodFromTouchDrawViewBlock)();
 @interface DeckViewController : UIViewController
 @property (nonatomic, weak) NSString *editorString;

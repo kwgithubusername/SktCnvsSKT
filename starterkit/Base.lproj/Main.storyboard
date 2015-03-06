@@ -42,9 +42,9 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="1lh-YW-8KR"/>
-                        <barButtonItem systemItem="action" id="4oE-5h-zNp">
+                        <barButtonItem title="Draw" id="aBN-XJ-Feh">
                             <connections>
-                                <action selector="shareButtonClicked:" destination="FMr-SY-H3t" id="sov-hh-aqO"/>
+                                <action selector="drawButtonClicked:" destination="FMr-SY-H3t" id="VID-wU-nOR"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="8dB-SE-77i"/>
@@ -56,6 +56,7 @@
                     </toolbarItems>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="drawButton" destination="aBN-XJ-Feh" id="U8n-Pi-yen"/>
                         <outlet property="scrollView" destination="YsW-7P-H3K" id="K3q-3b-9Bh"/>
                         <outlet property="spinner" destination="deW-cz-hBR" id="d67-Jm-n2h"/>
                     </connections>
