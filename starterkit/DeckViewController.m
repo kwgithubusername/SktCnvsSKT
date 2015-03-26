@@ -193,7 +193,7 @@ typedef void (^CancelTouchesInViewBlock)();
     {
         for (OMMTouchableView *touchableView in self.view.subviews)
         {
-            if (touchableView.tag == 999)
+            if (touchableView.tag == 998)
             {
                 // A TouchDrawView already exists
                 touchableView.drawingEnabled = YES;
@@ -206,12 +206,12 @@ typedef void (^CancelTouchesInViewBlock)();
         if (!self.touchDrawViewCreated)
         {
             // Create a TouchDrawView
-            TouchDrawView *tdv = [[TouchDrawView alloc] initWithFrame:self.view.frame];
-            [self.view addSubview:tdv];
-            tdv.tag = 999;
-            tdv.drawingEnabled = YES;
+            OMMTouchableView *touchableView = [[OMMTouchableView alloc] initWithFrame:self.view.frame];
+            [self.view addSubview:touchableView];
+            touchableView.tag = 998;
+            touchableView.drawingEnabled = YES;
             self.undoButton.enabled = YES;
-            tdv.deckViewControllerProperty = self; // Enables TouchDrawView to set and pass the undo block back to self
+            //touchableView.deckViewControllerProperty = self; // Enables TouchDrawView to set and pass the undo block back to self
             NSLog(@"draw view created");
         }
         
@@ -225,21 +225,21 @@ typedef void (^CancelTouchesInViewBlock)();
         //NSLog(@"Drawing enabled:%hhd", self.drawingEnabled);
         
     }
+    
     else
-    {NSLog(@"Drawing enabled is YES");
-        for (TouchDrawView *tdv in self.view.subviews)
+        
+    {
+        NSLog(@"Drawing enabled is YES");
+        for (OMMTouchableView *touchableView in self.view.subviews)
         {
-            if (tdv.tag == 999)
+            if (touchableView.tag == 998)
             {   // Disable drawing for TouchDrawView
-                tdv.drawingEnabled = NO;
+                touchableView.drawingEnabled = NO;
                 self.undoButton.enabled = NO;
             }
         }
         
-        if (self.cancelTouchesInViewBlock)
-        {   // Enable touches
-            self.cancelTouchesInViewBlock();
-        }
+        [self addPanPinchAndRotationGestureRecognizers];
         sender.tintColor = [UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0];
         self.drawingEnabled = NO;
     }
@@ -396,11 +396,11 @@ typedef void (^CancelTouchesInViewBlock)();
     {
         NSLog(@"We're making a deck");
         self.currentView = nil;
-        DeckMakerView *v = [[DeckMakerView alloc] initWithFrame:self.view.frame];
-        v.tag = 999;
+        DeckMakerView *view = [[DeckMakerView alloc] initWithFrame:self.view.frame];
+        view.tag = 999;
         self.currentView = [[UIView alloc] initWithFrame:self.view.frame];
-        self.currentView = v;
-        [v addObserver:self forKeyPath:@"imageCaptureRect" options:NSKeyValueObservingOptionNew context:NULL];
+        self.currentView = view;
+        [view addObserver:self forKeyPath:@"imageCaptureRect" options:NSKeyValueObservingOptionNew context:NULL];
         [self.view addSubview:self.currentView];
         //NSLog(@"Numberofsubviews: %d", [[self.view subviews] count]);
     }
@@ -409,11 +409,11 @@ typedef void (^CancelTouchesInViewBlock)();
     {
         NSLog(@"We're making a truck");
         self.currentView = nil;
-        TruckMakerView *v = [[TruckMakerView alloc] initWithFrame:self.view.frame];
-        v.tag = 999;
+        TruckMakerView *view = [[TruckMakerView alloc] initWithFrame:self.view.frame];
+        view.tag = 999;
         self.currentView = [[UIView alloc] initWithFrame:self.view.frame];
-        self.currentView = v;
-        [v addObserver:self forKeyPath:@"imageCaptureRect" options:NSKeyValueObservingOptionNew context:NULL];
+        self.currentView = view;
+        [view addObserver:self forKeyPath:@"imageCaptureRect" options:NSKeyValueObservingOptionNew context:NULL];
         [self.view addSubview:self.currentView];
         //NSLog(@"Numberofsubviews: %d", [[self.view subviews] count]);
     }
@@ -422,11 +422,11 @@ typedef void (^CancelTouchesInViewBlock)();
     {
         NSLog(@"We're making a wheel");
         self.currentView = nil;
-        WheelMakerView *v = [[WheelMakerView alloc] initWithFrame:self.view.frame];
-        v.tag = 999;
+        WheelMakerView *view = [[WheelMakerView alloc] initWithFrame:self.view.frame];
+        view.tag = 999;
         self.currentView = [[UIView alloc] initWithFrame:self.view.frame];
-        self.currentView = v;
-        [v addObserver:self forKeyPath:@"imageCaptureRect" options:NSKeyValueObservingOptionNew context:NULL];
+        self.currentView = view;
+        [view addObserver:self forKeyPath:@"imageCaptureRect" options:NSKeyValueObservingOptionNew context:NULL];
         [self.view addSubview:self.currentView];
     }
     
@@ -434,11 +434,11 @@ typedef void (^CancelTouchesInViewBlock)();
     {
         NSLog(@"We're making a tee");
         self.currentView = nil;
-        TeeMakerView *v = [[TeeMakerView alloc] initWithFrame:self.view.frame];
-        v.tag = 999;
+        TeeMakerView *view = [[TeeMakerView alloc] initWithFrame:self.view.frame];
+        view.tag = 999;
         self.currentView = [[UIView alloc] initWithFrame:self.view.frame];
-        self.currentView = v;
-        [v addObserver:self forKeyPath:@"imageCaptureRect" options:NSKeyValueObservingOptionNew context:NULL];
+        self.currentView = view;
+        [view addObserver:self forKeyPath:@"imageCaptureRect" options:NSKeyValueObservingOptionNew context:NULL];
         [self.view addSubview:self.currentView];
     }
 }
@@ -458,21 +458,11 @@ typedef void (^CancelTouchesInViewBlock)();
     pinchRecognizer.delegate = self;
     rotationRecognizer.delegate = self;
     
-    DeckViewController __weak *weakself = self;
+    DeckViewController __weak *weakSelf = self;
     [self setCancelTouchesInViewBlock:^{
-        DeckViewController *innerSelf = weakself;
-        if (innerSelf.drawingEnabled)
-        {
-            panRecognizer.cancelsTouchesInView = YES;
-            pinchRecognizer.cancelsTouchesInView = YES;
-            rotationRecognizer.cancelsTouchesInView = YES;
-        }
-        else if (!innerSelf.drawingEnabled)
-        {
-            panRecognizer.cancelsTouchesInView = NO;
-            pinchRecognizer.cancelsTouchesInView = NO;
-            rotationRecognizer.cancelsTouchesInView = NO;
-        }
+        [weakSelf.view removeGestureRecognizer:panRecognizer];
+        [weakSelf.view removeGestureRecognizer:rotationRecognizer];
+        [weakSelf.view removeGestureRecognizer:pinchRecognizer];
     }];
 }
 

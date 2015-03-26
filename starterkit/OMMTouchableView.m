@@ -38,6 +38,7 @@
     _currentColour = [UIColor redColor];
     _colouredPaths = [NSMutableArray array];
     _redoStack = [NSMutableArray array];
+    self.BackgroundColor = [UIColor clearColor];
     [self setUserInteractionEnabled:YES];
 }
 
