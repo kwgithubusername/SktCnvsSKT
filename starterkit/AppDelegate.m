@@ -17,14 +17,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-        UIImage *shadowImage = [UIImage new];
-    [[UINavigationBar appearance ]setBackgroundImage:shadowImage
-                                                  forBarMetrics:UIBarMetricsDefault];
-    [UINavigationBar appearance].translucent = YES;
-    [UINavigationBar appearance].backgroundColor = [UIColor clearColor];
-    
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onNotification:) name:nil object:nil];
-    
     return YES;
     
 }
