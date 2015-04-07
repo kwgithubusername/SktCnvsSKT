@@ -19,7 +19,6 @@
 
 - (void)setup
 {
-    
     self.backgroundColor = [UIColor clearColor];
     self.opaque = NO; // I'm not opaque
     self.contentMode = UIViewContentModeRedraw; // want to redraw if bounds change
@@ -148,12 +147,11 @@
     
         // Cut a hole in the shape of the path, revealing the image in DeckViewController
         CGContextRef ctx = UIGraphicsGetCurrentContext();
-        CGContextSetBlendMode(ctx, kCGBlendModeDestinationOut); 
+        CGContextSetBlendMode(ctx, kCGBlendModeDestinationOut);
         [path fill];
-        
     
         CGContextSetBlendMode(ctx, kCGBlendModeNormal);
-        
+    
         // Draw bolts
     NSArray *boltCGPointsArray = [[NSArray alloc] initWithObjects:[NSValue valueWithCGPoint:CGPointMake(width/2-10*scaleFactor, height/2-90*scaleFactor)],
                                                                       [NSValue valueWithCGPoint:CGPointMake(width/2+10*scaleFactor, height/2-90*scaleFactor)],
@@ -193,6 +191,7 @@
 
     _adBanner = [[ADBannerView alloc] initWithFrame:CGRectMake(0,self.bounds.size.height-45, 320, 50)];
     _adBanner.delegate = self;
+    
 }
 
 @end

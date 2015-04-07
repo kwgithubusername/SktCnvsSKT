@@ -153,38 +153,6 @@ typedef void (^CancelTouchesInViewBlock)();
     return interactionController;
 }
 
-/* ATTEMPT TO FADE THE NAV BAR
- - (void)viewDidAppear:(BOOL)animated {
- [super viewDidAppear:animated];
- self.view.window.backgroundColor = self.view.backgroundColor;
- UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fadeInFadeOut:)];
- [self.view.window addGestureRecognizer:tapper];
- 
- }
- 
- 
- -(void)fadeInFadeOut:(UITapGestureRecognizer *)sender {
- static BOOL hide = YES;
- id hitView = [self.navigationController.view hitTest:[sender locationInView:self.navigationController.view] withEvent:nil];
- 
- if (! [hitView isKindOfClass:[UINavigationBar class]] && hide == YES) {
- hide = ! hide;
- [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
- [UIView animateWithDuration:.35 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionAllowUserInteraction animations:^{
- self.navigationController.navigationBar.alpha = 0;
- //     self.bottomView.alpha = 0;
- } completion:nil];
- 
- }else if (hide == NO){
- hide = ! hide;
- [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
- [UIView animateWithDuration:.35 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionAllowUserInteraction animations:^{
- self.navigationController.navigationBar.alpha = 1;
- //    self.bottomView.alpha = 1;
- } completion:nil];
- }
- }
- */
 #pragma mark Drawing
 
 - (IBAction)drawButtonClicked:(UIBarButtonItem *)sender
@@ -469,6 +437,7 @@ typedef void (^CancelTouchesInViewBlock)();
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor blueColor];
     self.drawingEnabled = NO;
     self.touchDrawViewCreated = NO;
     [self.spinner stopAnimating];
@@ -477,7 +446,6 @@ typedef void (^CancelTouchesInViewBlock)();
     [self.scrollView insertSubview:self.imageView atIndex:0];
     
     self.imageView.userInteractionEnabled = YES;
-    //    self.scrollView.userInteractionEnabled = YES;
     [self addPanPinchAndRotationGestureRecognizers];
 
     [self loadEditorView];
