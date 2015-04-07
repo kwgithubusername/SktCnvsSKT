@@ -8,6 +8,8 @@
 
 #import "DeckViewController.h"
 #import <MobileCoreServices/MobileCoreServices.h>
+#import <ColorMapView/ColorMapView.h>
+#import "HWGOptionsColorToStore.h"
 //#import "DBCameraViewController.h"
 //#import "DBCameraContainerViewController.h"
 
@@ -27,11 +29,94 @@ typedef void (^CancelTouchesInViewBlock)();
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *undoButton;
 @property (nonatomic) CGRect imageForInstagramRect;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *drawButton;
-
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *baseColorBarButton;
+@property (nonatomic) ColorMapView *colorView;
+@property (nonatomic) HWGOptionsColorToStore *colorStorage;
 
 @end
 
 @implementation DeckViewController
+
+-(HWGOptionsColorToStore *)colorStorage
+{
+    if (!_colorStorage) _colorStorage = [[HWGOptionsColorToStore alloc] init];
+    return _colorStorage;
+}
+
+- (IBAction)baseColorButtonClicked:(UIBarButtonItem *)sender
+{
+    self.colorView = [[ColorMapView alloc] initWithFrame:self.view.frame];
+    self.colorView.tag = 130;
+    [self.view addSubview:self.colorView];
+    [self.view bringSubviewToFront:self.colorView];
+    UITapGestureRecognizer *tapToSelectColorGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectColor:)];
+    [self.view addGestureRecognizer:tapToSelectColorGestureRecognizer];
+    tapToSelectColorGestureRecognizer.view.tag = 131;
+}
+
+-(void)selectColor:(UITapGestureRecognizer *)tapGestureRecognizer
+{
+    CGPoint point = [tapGestureRecognizer locationInView:self.colorView];
+    UIColor *selectedColor = [self.colorView getColorAtLocation:point];
+    self.baseColorBarButton.tintColor = selectedColor;
+    self.view.backgroundColor = selectedColor;
+    [self.colorStorage saveColor:selectedColor];
+    
+    [self removeColorView];
+    
+    [self removeColorTapGestureRecognizer:tapGestureRecognizer];
+    
+    [self checkForExistingGestureRecognizersAndReapplyGestureRecognizersAsNeeded];
+}
+
+-(void)checkForExistingGestureRecognizersAndReapplyGestureRecognizersAsNeeded
+{
+    int gestureRecognizerCount = (int)[self.view.gestureRecognizers count];
+    for (int i = 0; i < gestureRecognizerCount; i++)
+    {
+        if ([self.view.gestureRecognizers[i] isKindOfClass:[UIPanGestureRecognizer class]])
+        {
+            break;
+        }
+        if (i == gestureRecognizerCount-1)
+        {
+            [self addPanPinchAndRotationGestureRecognizers];
+        }
+    }
+}
+
+-(void)removeColorView
+{
+    for (UIView *view in self.view.subviews)
+    {
+        if (view.tag == 130)
+        {
+            [view removeFromSuperview];
+        }
+    }
+}
+
+-(void)removeColorTapGestureRecognizer:(UITapGestureRecognizer *)tapGestureRecognizer
+{
+    for (UIGestureRecognizer *gestureRecognizer in self.view.gestureRecognizers)
+    {
+        if (gestureRecognizer.view.tag == 131)
+        {
+            [gestureRecognizer removeTarget:self action:@selector(selectColor:)];
+            [self.view removeGestureRecognizer:tapGestureRecognizer];
+        }
+    }
+}
+
+-(void)loadBaseColor
+{
+    UIColor *color = [self.colorStorage loadColor];
+    if (color)
+    {
+        self.view.backgroundColor = color;
+        self.baseColorBarButton.tintColor = color;
+    }
+}
 
 #pragma mark Instagram sharing
 
@@ -247,33 +332,6 @@ typedef void (^CancelTouchesInViewBlock)();
     self.scrollView.contentSize = self.image ? self.image.size : CGSizeZero; // If the struct becomes nil the result would be undefined
 }
 
-#pragma mark Translation, Transform, and Rotation
-
-- (void)panDetected:(UIPanGestureRecognizer *)panRecognizer
-{
-    CGPoint translation = [panRecognizer translationInView:self.view];
-    CGPoint imageViewPosition = self.imageView.center;
-    imageViewPosition.x += translation.x;
-    imageViewPosition.y += translation.y;
-    
-    self.imageView.center = imageViewPosition;
-    [panRecognizer setTranslation:CGPointZero inView:self.view];
-}
-
-- (void)pinchDetected:(UIPinchGestureRecognizer *)pinchRecognizer
-{
-    CGFloat scale = pinchRecognizer.scale;
-    self.imageView.transform = CGAffineTransformScale(self.imageView.transform, scale, scale);
-    pinchRecognizer.scale = 1.0;
-}
-
-- (void)rotationDetected:(UIRotationGestureRecognizer *)rotationRecognizer
-{
-    CGFloat angle = rotationRecognizer.rotation;
-    self.imageView.transform = CGAffineTransformRotate(self.imageView.transform, angle);
-    rotationRecognizer.rotation = 0.0;
-}
-
 #pragma mark Add Photo
 
 - (IBAction)saveImage:(UIBarButtonItem *)sender {
@@ -411,6 +469,36 @@ typedef void (^CancelTouchesInViewBlock)();
     }
 }
 
+#pragma mark - Translation, Transform, and Rotation -
+
+- (void)panDetected:(UIPanGestureRecognizer *)panRecognizer
+{
+    NSLog(@"pan detected");
+    CGPoint translation = [panRecognizer translationInView:self.view];
+    CGPoint imageViewPosition = self.imageView.center;
+    imageViewPosition.x += translation.x;
+    imageViewPosition.y += translation.y;
+    
+    self.imageView.center = imageViewPosition;
+    [panRecognizer setTranslation:CGPointZero inView:self.view];
+}
+
+- (void)pinchDetected:(UIPinchGestureRecognizer *)pinchRecognizer
+{
+    NSLog(@"pinch detected");
+    CGFloat scale = pinchRecognizer.scale;
+    self.imageView.transform = CGAffineTransformScale(self.imageView.transform, scale, scale);
+    pinchRecognizer.scale = 1.0;
+}
+
+- (void)rotationDetected:(UIRotationGestureRecognizer *)rotationRecognizer
+{
+    NSLog(@"rotation detected");
+    CGFloat angle = rotationRecognizer.rotation;
+    self.imageView.transform = CGAffineTransformRotate(self.imageView.transform, angle);
+    rotationRecognizer.rotation = 0.0;
+}
+
 - (void)addPanPinchAndRotationGestureRecognizers
 {
     UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panDetected:)];
@@ -434,10 +522,11 @@ typedef void (^CancelTouchesInViewBlock)();
     }];
 }
 
+#pragma mark - View methods -
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor blueColor];
     self.drawingEnabled = NO;
     self.touchDrawViewCreated = NO;
     [self.spinner stopAnimating];
@@ -448,6 +537,7 @@ typedef void (^CancelTouchesInViewBlock)();
     self.imageView.userInteractionEnabled = YES;
     [self addPanPinchAndRotationGestureRecognizers];
 
+    [self loadBaseColor];
     [self loadEditorView];
     // Do any additional setup after loading the view.
 }

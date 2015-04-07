@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		22FECA3578FB9C9E776C2B6A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 571FCDFED05A3148BE8F3CFE /* libPods.a */; };
+		9E356C681AD48381009B6ED9 /* colorGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E356C671AD48381009B6ED9 /* colorGradient.png */; };
+		9E356C6B1AD48ADB009B6ED9 /* HWGOptionsColorToStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E356C6A1AD48ADB009B6ED9 /* HWGOptionsColorToStore.m */; };
 		9E9078AE1AAA1A6900F724A1 /* OMMColouredPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E9078AB1AAA1A6900F724A1 /* OMMColouredPath.m */; };
 		9E9078AF1AAA1A6A00F724A1 /* OMMTouchableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E9078AD1AAA1A6900F724A1 /* OMMTouchableView.m */; };
 		9EC9BF1F1A35EE2A0050FBE2 /* Contents.json in Resources */ = {isa = PBXBuildFile; fileRef = 9EC9BF0B1A35EE2A0050FBE2 /* Contents.json */; };
@@ -63,6 +66,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		14954CDEE4EF268D390930DD /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		571FCDFED05A3148BE8F3CFE /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A1739462C65983AEDCE70D8 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		9E356C671AD48381009B6ED9 /* colorGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = colorGradient.png; sourceTree = "<group>"; };
+		9E356C691AD48ADB009B6ED9 /* HWGOptionsColorToStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HWGOptionsColorToStore.h; sourceTree = "<group>"; };
+		9E356C6A1AD48ADB009B6ED9 /* HWGOptionsColorToStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HWGOptionsColorToStore.m; sourceTree = "<group>"; };
 		9E9078AA1AAA1A6900F724A1 /* OMMColouredPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMMColouredPath.h; sourceTree = "<group>"; };
 		9E9078AB1AAA1A6900F724A1 /* OMMColouredPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMMColouredPath.m; sourceTree = "<group>"; };
 		9E9078AC1AAA1A6900F724A1 /* OMMTouchableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMMTouchableView.h; sourceTree = "<group>"; };
@@ -130,6 +139,7 @@
 			files = (
 				9EED01FE1A35182C0025E974 /* iAd.framework in Frameworks */,
 				9ECB535D1A2F71DF003308F5 /* MobileCoreServices.framework in Frameworks */,
+				22FECA3578FB9C9E776C2B6A /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -197,6 +207,8 @@
 				9ECF1C7E1A2697DD00D2F5ED /* starterkit */,
 				9ECF1C981A2697DD00D2F5ED /* starterkitTests */,
 				9ECF1C7D1A2697DD00D2F5ED /* Products */,
+				FDBCAA30EC691EE1598A8B23 /* Pods */,
+				AC7F6AD7129F85230669BF8C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -221,9 +233,12 @@
 				9ECF1C841A2697DD00D2F5ED /* AppDelegate.m */,
 				9ECF1C861A2697DD00D2F5ED /* ViewController.h */,
 				9ECF1C871A2697DD00D2F5ED /* ViewController.m */,
+				9E356C671AD48381009B6ED9 /* colorGradient.png */,
 				9ECF1C891A2697DD00D2F5ED /* Main.storyboard */,
 				9ECF1CA51A26982F00D2F5ED /* DeckViewController.h */,
 				9ECF1CA61A26982F00D2F5ED /* DeckViewController.m */,
+				9E356C691AD48ADB009B6ED9 /* HWGOptionsColorToStore.h */,
+				9E356C6A1AD48ADB009B6ED9 /* HWGOptionsColorToStore.m */,
 				9ED7DFEE1A2D0BF700A9DE54 /* DeckMakerView.h */,
 				9ED7DFEF1A2D0BF700A9DE54 /* DeckMakerView.m */,
 				9ECB32CC1A3FA50000A941EB /* TruckMakerView.h */,
@@ -271,6 +286,23 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		AC7F6AD7129F85230669BF8C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				571FCDFED05A3148BE8F3CFE /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FDBCAA30EC691EE1598A8B23 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				14954CDEE4EF268D390930DD /* Pods.debug.xcconfig */,
+				9A1739462C65983AEDCE70D8 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -278,9 +310,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9ECF1C9F1A2697DD00D2F5ED /* Build configuration list for PBXNativeTarget "starterkit" */;
 			buildPhases = (
+				CD0D2C15124C21E5ACA3D1D0 /* Check Pods Manifest.lock */,
 				9ECF1C781A2697DD00D2F5ED /* Sources */,
 				9ECF1C791A2697DD00D2F5ED /* Frameworks */,
 				9ECF1C7A1A2697DD00D2F5ED /* Resources */,
+				EBEA9E422FC8BDB365F50A11 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -368,6 +402,7 @@
 				9EC9BF211A35EE2A0050FBE2 /* Icon-40@2x.png in Resources */,
 				9EC9BF311A35EE2A0050FBE2 /* iTunesArtwork.png in Resources */,
 				9EC9BF2A1A35EE2A0050FBE2 /* Icon-60.png in Resources */,
+				9E356C681AD48381009B6ED9 /* colorGradient.png in Resources */,
 				9EC9BF201A35EE2A0050FBE2 /* Icon-40.png in Resources */,
 				9EC9BF361A35F6790050FBE2 /* deck.png in Resources */,
 				9EC9BF271A35EE2A0050FBE2 /* Icon-Small.png in Resources */,
@@ -391,6 +426,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		CD0D2C15124C21E5ACA3D1D0 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		EBEA9E422FC8BDB365F50A11 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		9ECF1C781A2697DD00D2F5ED /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -408,6 +476,7 @@
 				9ECF1C851A2697DD00D2F5ED /* AppDelegate.m in Sources */,
 				9ECF1C821A2697DD00D2F5ED /* main.m in Sources */,
 				9E9078AE1AAA1A6900F724A1 /* OMMColouredPath.m in Sources */,
+				9E356C6B1AD48ADB009B6ED9 /* HWGOptionsColorToStore.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -529,6 +598,7 @@
 		};
 		9ECF1CA01A2697DD00D2F5ED /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 14954CDEE4EF268D390930DD /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = starterkit/Info.plist;
@@ -540,6 +610,7 @@
 		};
 		9ECF1CA11A2697DD00D2F5ED /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9A1739462C65983AEDCE70D8 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = starterkit/Info.plist;

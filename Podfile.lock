@@ -1,0 +1,10 @@
+PODS:
+  - ColorMapView (1.0.0)
+
+DEPENDENCIES:
+  - ColorMapView
+
+SPEC CHECKSUMS:
+  ColorMapView: ed5ba175cfe1eff6f24a8b8d5003237b64f29776
+
+COCOAPODS: 0.35.0
