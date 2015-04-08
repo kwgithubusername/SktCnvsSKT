@@ -32,6 +32,7 @@ typedef void (^CancelTouchesInViewBlock)();
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *baseColorBarButton;
 @property (nonatomic) ColorMapView *colorView;
 @property (nonatomic) HWGOptionsColorToStore *colorStorage;
+@property (nonatomic) BOOL viewPushedByNavigationBar;
 
 @end
 
@@ -473,7 +474,6 @@ typedef void (^CancelTouchesInViewBlock)();
 
 - (void)panDetected:(UIPanGestureRecognizer *)panRecognizer
 {
-    NSLog(@"pan detected");
     CGPoint translation = [panRecognizer translationInView:self.view];
     CGPoint imageViewPosition = self.imageView.center;
     imageViewPosition.x += translation.x;
@@ -485,7 +485,6 @@ typedef void (^CancelTouchesInViewBlock)();
 
 - (void)pinchDetected:(UIPinchGestureRecognizer *)pinchRecognizer
 {
-    NSLog(@"pinch detected");
     CGFloat scale = pinchRecognizer.scale;
     self.imageView.transform = CGAffineTransformScale(self.imageView.transform, scale, scale);
     pinchRecognizer.scale = 1.0;
@@ -493,7 +492,6 @@ typedef void (^CancelTouchesInViewBlock)();
 
 - (void)rotationDetected:(UIRotationGestureRecognizer *)rotationRecognizer
 {
-    NSLog(@"rotation detected");
     CGFloat angle = rotationRecognizer.rotation;
     self.imageView.transform = CGAffineTransformRotate(self.imageView.transform, angle);
     rotationRecognizer.rotation = 0.0;
@@ -531,14 +529,28 @@ typedef void (^CancelTouchesInViewBlock)();
     self.touchDrawViewCreated = NO;
     [self.spinner stopAnimating];
     self.navigationController.toolbarHidden = NO;
+    self.navigationController.navigationBar.hidden = YES;
     
     [self.scrollView insertSubview:self.imageView atIndex:0];
     
     self.imageView.userInteractionEnabled = YES;
     [self addPanPinchAndRotationGestureRecognizers];
-
+    
     [self loadBaseColor];
     [self loadEditorView];
+    
+    __weak DeckViewController *weakSelf = self;
+    
+    [[NSNotificationCenter defaultCenter] addObserverForName:@"UIViewAnimationDidCommitNotification"
+                              object:nil
+                               queue:nil
+                          usingBlock:^(NSNotification* notification){
+                    
+                                    if ([[notification userInfo][@"name"] isEqual:@"UINavigationControllerHideShowNavigationBar"])
+                                    {
+                                        [weakSelf pushViewBasedOnNavigationBarChange];
+                                    };
+                          }];
     // Do any additional setup after loading the view.
 }
 
@@ -555,9 +567,40 @@ typedef void (^CancelTouchesInViewBlock)();
             }
         }
     }
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UINavigationControllerHideShowNavigationBar" object:nil];
 }
 
+-(void)pushViewBasedOnNavigationBarChange
+{
+    if (self.navigationController.navigationBarHidden == YES)
+    {
+        NSLog(@"navbar is being hidden");
+        [self pushViewDownToCounterNavigationBarBeingHidden];
+    }
+    else
+    {
+        NSLog(@"navbar is becoming visible");
+        [self pushViewUpToCounterNavigationBarBeingShown];
+    }
+}
 
+-(void)pushViewDownToCounterNavigationBarBeingHidden
+{
+    if (!self.viewPushedByNavigationBar)
+    {
+        self.imageView.frame = CGRectOffset(self.imageView.frame, 0, 88);
+        self.viewPushedByNavigationBar = YES;
+    }
+}
+
+-(void)pushViewUpToCounterNavigationBarBeingShown
+{
+    if (self.viewPushedByNavigationBar)
+    {
+        self.imageView.frame = CGRectOffset(self.imageView.frame, 0, -88);
+        self.viewPushedByNavigationBar = NO;
+    }
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
