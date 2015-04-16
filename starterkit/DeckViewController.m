@@ -14,6 +14,7 @@
 //#import "DBCameraContainerViewController.h"
 
 typedef void (^CancelTouchesInViewBlock)();
+typedef void (^RemoveColorGestureBlock)();
 
 @interface DeckViewController () <UIScrollViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate, UIDocumentInteractionControllerDelegate>
 
@@ -26,6 +27,7 @@ typedef void (^CancelTouchesInViewBlock)();
 @property BOOL drawingEnabled;
 @property BOOL touchDrawViewCreated;
 @property (nonatomic, copy) CancelTouchesInViewBlock cancelTouchesInViewBlock;
+@property (nonatomic, copy) RemoveColorGestureBlock removeColorGestureBlock;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *undoButton;
 @property (nonatomic) CGRect imageForInstagramRect;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *drawButton;
@@ -33,7 +35,7 @@ typedef void (^CancelTouchesInViewBlock)();
 @property (nonatomic) ColorMapView *colorView;
 @property (nonatomic) HWGOptionsColorToStore *colorStorage;
 @property (nonatomic) BOOL viewPushedByNavigationBar;
-@property (nonatomic) BOOL hasPickedFirstImage;
+@property (nonatomic) BOOL isPickingColor;
 
 @end
 
@@ -47,9 +49,21 @@ typedef void (^CancelTouchesInViewBlock)();
 
 - (IBAction)baseColorButtonClicked:(UIBarButtonItem *)sender
 {
-    CGRect viewFrame = self.view.frame;
+    if (!self.isPickingColor)
+    {
+        [self showColorPicker];
+    }
+    else
+    {
+        [self hideColorPicker];
+    }
+}
+
+-(void)showColorPicker
+{
+    CGRect viewFrame = [[UIScreen mainScreen] bounds];
     CGFloat statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
-    self.colorView = [[ColorMapView alloc] initWithFrame:CGRectMake(viewFrame.origin.x, viewFrame.origin.y+statusBarHeight, viewFrame.size.width, viewFrame.size.height-44)];
+    self.colorView = [[ColorMapView alloc] initWithFrame:CGRectMake(viewFrame.origin.x, viewFrame.origin.y+statusBarHeight+44, viewFrame.size.width, viewFrame.size.height-44*3-statusBarHeight)];
     self.colorView.tag = 130;
     
     [UIView transitionWithView:self.view
@@ -62,21 +76,32 @@ typedef void (^CancelTouchesInViewBlock)();
     UITapGestureRecognizer *tapToSelectColorGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectColor:)];
     [self.view addGestureRecognizer:tapToSelectColorGestureRecognizer];
     tapToSelectColorGestureRecognizer.view.tag = 131;
+    self.isPickingColor = YES;
+}
+
+-(void)hideColorPicker
+{
+    [self removeColorView];
+    [self removeColorTapGestureRecognizer:nil];
+    [self checkForExistingGestureRecognizersAndReapplyGestureRecognizersAsNeeded];
+    self.isPickingColor = NO;
 }
 
 -(void)selectColor:(UITapGestureRecognizer *)tapGestureRecognizer
 {
-    CGPoint point = [tapGestureRecognizer locationInView:self.colorView];
-    UIColor *selectedColor = [self.colorView getColorAtLocation:point];
-    self.baseColorBarButton.tintColor = selectedColor;
-    self.view.backgroundColor = selectedColor;
-    [self.colorStorage saveColor:selectedColor];
-    
+    if (tapGestureRecognizer && self.isPickingColor)
+    {
+        CGPoint point = [tapGestureRecognizer locationInView:self.colorView];
+        UIColor *selectedColor = [self.colorView getColorAtLocation:point];
+        self.baseColorBarButton.tintColor = selectedColor;
+        self.view.backgroundColor = selectedColor;
+        [self.colorStorage saveColor:selectedColor];
+    }
+
     [self removeColorView];
-    
     [self removeColorTapGestureRecognizer:tapGestureRecognizer];
-    
     [self checkForExistingGestureRecognizersAndReapplyGestureRecognizersAsNeeded];
+    self.isPickingColor = NO;
 }
 
 -(void)checkForExistingGestureRecognizersAndReapplyGestureRecognizersAsNeeded
@@ -111,14 +136,7 @@ typedef void (^CancelTouchesInViewBlock)();
 
 -(void)removeColorTapGestureRecognizer:(UITapGestureRecognizer *)tapGestureRecognizer
 {
-    for (UIGestureRecognizer *gestureRecognizer in self.view.gestureRecognizers)
-    {
-        if (gestureRecognizer.view.tag == 131)
-        {
-            [gestureRecognizer removeTarget:self action:@selector(selectColor:)];
-            [self.view removeGestureRecognizer:tapGestureRecognizer];
-        }
-    }
+    [self.view removeGestureRecognizer:tapGestureRecognizer];
 }
 
 -(void)loadBaseColor
@@ -400,10 +418,8 @@ typedef void (^CancelTouchesInViewBlock)();
     [self dismissViewControllerAnimated:YES completion:NULL];
     [self.currentView setNeedsDisplay];
     [self.spinner stopAnimating];
-    int offsetForFirstChosenImage = self.hasPickedFirstImage ? 88 : 0;
-    CGPoint contentOffsetCGPoint = CGPointMake(self.scrollView.contentOffset.x, self.scrollView.contentOffset.y+offsetForFirstChosenImage);
+    CGPoint contentOffsetCGPoint = CGPointMake(self.scrollView.contentOffset.x, self.scrollView.contentOffset.y+88);
     self.scrollView.contentOffset = contentOffsetCGPoint;
-    self.hasPickedFirstImage = YES;
 }
 
 +(BOOL)canAddPhoto
@@ -621,9 +637,10 @@ typedef void (^CancelTouchesInViewBlock)();
     }
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [[self navigationController] setNavigationBarHidden:NO animated:YES];
 }
 
 /*
