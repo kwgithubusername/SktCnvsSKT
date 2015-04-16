@@ -33,6 +33,7 @@ typedef void (^CancelTouchesInViewBlock)();
 @property (nonatomic) ColorMapView *colorView;
 @property (nonatomic) HWGOptionsColorToStore *colorStorage;
 @property (nonatomic) BOOL viewPushedByNavigationBar;
+@property (nonatomic) BOOL hasPickedFirstImage;
 
 @end
 
@@ -46,7 +47,9 @@ typedef void (^CancelTouchesInViewBlock)();
 
 - (IBAction)baseColorButtonClicked:(UIBarButtonItem *)sender
 {
-    self.colorView = [[ColorMapView alloc] initWithFrame:self.view.frame];
+    CGRect viewFrame = self.view.frame;
+    CGFloat statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
+    self.colorView = [[ColorMapView alloc] initWithFrame:CGRectMake(viewFrame.origin.x, viewFrame.origin.y+statusBarHeight, viewFrame.size.width, viewFrame.size.height-44)];
     self.colorView.tag = 130;
     
     [UIView transitionWithView:self.view
@@ -397,6 +400,10 @@ typedef void (^CancelTouchesInViewBlock)();
     [self dismissViewControllerAnimated:YES completion:NULL];
     [self.currentView setNeedsDisplay];
     [self.spinner stopAnimating];
+    int offsetForFirstChosenImage = self.hasPickedFirstImage ? 88 : 0;
+    CGPoint contentOffsetCGPoint = CGPointMake(self.scrollView.contentOffset.x, self.scrollView.contentOffset.y+offsetForFirstChosenImage);
+    self.scrollView.contentOffset = contentOffsetCGPoint;
+    self.hasPickedFirstImage = YES;
 }
 
 +(BOOL)canAddPhoto
@@ -591,13 +598,15 @@ typedef void (^CancelTouchesInViewBlock)();
         NSLog(@"navbar is becoming visible");
         [self pushViewUpToCounterNavigationBarBeingShown];
     }
+    NSLog(@"contentoffset.y is %f", self.scrollView.contentOffset.y);
 }
 
 -(void)pushViewDownToCounterNavigationBarBeingHidden
 {
     if (!self.viewPushedByNavigationBar)
     {
-        self.imageView.frame = CGRectOffset(self.imageView.frame, 0, 88);
+        CGPoint contentOffsetCGPoint = CGPointMake(self.scrollView.contentOffset.x, self.scrollView.contentOffset.y-88);
+        self.scrollView.contentOffset = contentOffsetCGPoint;
         self.viewPushedByNavigationBar = YES;
     }
 }
@@ -606,7 +615,8 @@ typedef void (^CancelTouchesInViewBlock)();
 {
     if (self.viewPushedByNavigationBar)
     {
-        self.imageView.frame = CGRectOffset(self.imageView.frame, 0, -88);
+        CGPoint contentOffsetCGPoint = CGPointMake(self.scrollView.contentOffset.x, self.scrollView.contentOffset.y+88);
+        self.scrollView.contentOffset = contentOffsetCGPoint;
         self.viewPushedByNavigationBar = NO;
     }
 }
