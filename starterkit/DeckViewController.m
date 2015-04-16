@@ -48,7 +48,13 @@ typedef void (^CancelTouchesInViewBlock)();
 {
     self.colorView = [[ColorMapView alloc] initWithFrame:self.view.frame];
     self.colorView.tag = 130;
-    [self.view addSubview:self.colorView];
+    
+    [UIView transitionWithView:self.view
+                      duration:0.2
+                       options:UIViewAnimationOptionTransitionFlipFromLeft
+                    animations:^ { [self.view addSubview:self.colorView]; }
+                    completion:nil];
+    
     [self.view bringSubviewToFront:self.colorView];
     UITapGestureRecognizer *tapToSelectColorGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectColor:)];
     [self.view addGestureRecognizer:tapToSelectColorGestureRecognizer];
@@ -92,7 +98,10 @@ typedef void (^CancelTouchesInViewBlock)();
     {
         if (view.tag == 130)
         {
-            [view removeFromSuperview];
+            [UIView transitionWithView:self.view duration:0.2
+                               options:UIViewAnimationOptionTransitionFlipFromLeft //change to whatever animation you like
+                            animations:^ { [view removeFromSuperview]; }
+                            completion:nil];
         }
     }
 }
