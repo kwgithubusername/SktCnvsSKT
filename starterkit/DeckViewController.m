@@ -151,187 +151,6 @@ typedef void (^RemoveColorGestureBlock)();
     }
 }
 
-#pragma mark - Instagram sharing -
-
-- (IBAction)shareButtonClicked:(UIBarButtonItem *)sender
-{
-    [self ShareInstagram];
-}
-
--(void)ShareInstagram
-{
-    [self storeimage];
-//    UIImagePickerController *imgpicker=[[UIImagePickerController alloc] init];
-//    imgpicker.delegate=self;
-//    [self storeimage];
-//    NSURL *instagramURL = [NSURL URLWithString:@"instagram://app"];
-//    if ([[UIApplication sharedApplication] canOpenURL:instagramURL])
-//    {
-//        
-//        CGRect rect = CGRectMake(0 ,0 , 612, 612);
-//        NSString  *jpgPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/15717.ig"];
-//        
-//        NSURL *igImageHookFile = [[NSURL alloc] initWithString:[[NSString alloc] initWithFormat:@"file://%@", jpgPath]];
-//        self.documentController = [[UIDocumentInteractionController alloc] init];
-//        self.documentController.UTI = @"com.instagram.photo";
-//        self.documentController.delegate=self;
-//        self.documentController = [self setupControllerWithURL:igImageHookFile usingDelegate:self];
-//        self.documentController=[UIDocumentInteractionController interactionControllerWithURL:igImageHookFile];
-//        self.documentController.delegate=self;
-//        [self.documentController presentOpenInMenuFromRect: rect    inView: self.view animated: YES ];
-//        //  [[UIApplication sharedApplication] openURL:instagramURL];
-//    }
-//    else
-//    {
-//        //   NSLog(@"instagramImageShare");
-//        UIAlertView *errorToShare = [[UIAlertView alloc] initWithTitle:@"Instagram unavailable " message:@"You need to install Instagram in your device in order to share this image" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-//        
-//        errorToShare.tag=3010;
-//        [errorToShare show];
-//    }
-}
-
-- (UIImage *)captureView:(UIView *)view
-{
-    CGRect screenRect = self.imageForInstagramRect;
-    NSLog(@"origin.y in captureview is %f", screenRect.origin.y);
-    
-    UIGraphicsBeginImageContext(screenRect.size);
-    
-    CGContextRef ctx = UIGraphicsGetCurrentContext();
-    [[UIColor blackColor] set];
-    CGContextFillRect(ctx, screenRect);
-    
-    CGContextTranslateCTM(ctx, -screenRect.origin.x, -screenRect.origin.y);
-    
-    [view.layer renderInContext:ctx];
-    
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    
-    UIGraphicsEndImageContext();
-    
-    return newImage;
-}
-
-- (void)storeimage
-{
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,     NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *savedImagePath = [documentsDirectory stringByAppendingPathComponent:@"15717.ig"];
-    UIImage *NewImg=[self resizedImage:[self captureView:self.view] inImage:CGRectMake(0, 0, 612, 612) ];
-    NSData *imageData = UIImagePNGRepresentation(NewImg);
-    [imageData writeToFile:savedImagePath atomically:NO];
-    UIImageWriteToSavedPhotosAlbum(NewImg, nil, nil, nil);
-}
-
--(UIImage*)resizedImage:(UIImage *)image inImage:(CGRect)thumbRect
-{
-    CGImageRef imageRef = [image CGImage];
-    CGImageAlphaInfo alphaInfo = CGImageGetAlphaInfo(imageRef);
-    
-    // There's a wierdness with kCGImageAlphaNone and CGBitmapContextCreate
-    // see Supported Pixel Formats in the Quartz 2D Programming Guide
-    // Creating a Bitmap Graphics Context section
-    // only RGB 8 bit images with alpha of kCGImageAlphaNoneSkipFirst, kCGImageAlphaNoneSkipLast, kCGImageAlphaPremultipliedFirst,
-    // and kCGImageAlphaPremultipliedLast, with a few other oddball image kinds are supported
-    // The images on input here are likely to be png or jpeg files
-    if (alphaInfo == kCGImageAlphaNone)
-        alphaInfo = kCGImageAlphaNoneSkipLast;
-    
-    // Build a bitmap context that's the size of the thumbRect
-    CGContextRef bitmap = CGBitmapContextCreate(
-                                                NULL,
-                                                thumbRect.size.width,       // width
-                                                thumbRect.size.height,      // height
-                                                CGImageGetBitsPerComponent(imageRef),   // really needs to always be 8
-                                                4 * thumbRect.size.width,   // rowbytes
-                                                CGImageGetColorSpace(imageRef),
-                                                (CGBitmapInfo)alphaInfo
-                                                );
-    
-    // Draw into the context, this scales the image
-    CGContextDrawImage(bitmap, thumbRect, imageRef);
-    
-    // Get an image from the context and a UIImage
-    CGImageRef  ref = CGBitmapContextCreateImage(bitmap);
-    UIImage*    result = [UIImage imageWithCGImage:ref];
-    
-    CGContextRelease(bitmap);   // ok if NULL
-    CGImageRelease(ref);
-    
-    return result;
-}
-
-- (UIDocumentInteractionController *) setupControllerWithURL: (NSURL*) fileURL usingDelegate: (id <UIDocumentInteractionControllerDelegate>) interactionDelegate
-{
-    
-    UIDocumentInteractionController *interactionController = [UIDocumentInteractionController interactionControllerWithURL:fileURL];
-    interactionController.delegate = self;
-    
-    return interactionController;
-}
-
-#pragma mark - Drawing -
-
-- (IBAction)drawButtonClicked:(UIBarButtonItem *)sender
-{
-    if (self.drawingEnabled == NO)
-    {
-        for (OMMTouchableView *touchableView in self.view.subviews)
-        {
-            if (touchableView.tag == 998)
-            {
-                // A TouchDrawView already exists
-                touchableView.drawingEnabled = YES;
-                self.undoButton.enabled = YES;
-                self.touchDrawViewCreated = YES;
-                //NSLog(@"A TouchDrawView already exists:%d", [self.view.subviews count]);
-            }
-        }
-        
-        if (!self.touchDrawViewCreated)
-        {
-            // Create a TouchDrawView
-            OMMTouchableView *touchableView = [[OMMTouchableView alloc] initWithFrame:self.view.frame];
-            [self.view addSubview:touchableView];
-            touchableView.tag = 998;
-            touchableView.drawingEnabled = YES;
-            self.undoButton.enabled = YES;
-            //touchableView.deckViewControllerProperty = self; // Enables TouchDrawView to set and pass the undo block back to self
-            NSLog(@"draw view created");
-        }
-        
-        if (self.cancelTouchesInViewBlock)
-        {   // Cancel touches
-            self.cancelTouchesInViewBlock();
-        }
-        // Tell DeckViewController that drawing is enabled
-        sender.tintColor = [UIColor redColor];
-        self.drawingEnabled = YES;
-        //NSLog(@"Drawing enabled:%hhd", self.drawingEnabled);
-        
-    }
-    
-    else
-        
-    {
-        NSLog(@"Drawing enabled is YES");
-        for (OMMTouchableView *touchableView in self.view.subviews)
-        {
-            if (touchableView.tag == 998)
-            {   // Disable drawing for TouchDrawView
-                touchableView.drawingEnabled = NO;
-                self.undoButton.enabled = NO;
-            }
-        }
-        
-        [self addPanPinchAndRotationGestureRecognizers];
-        sender.tintColor = [UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0];
-        self.drawingEnabled = NO;
-    }
-
-}
-
 #pragma mark - View and Image Management -
 
 -(void)setScrollView:(UIScrollView *)scrollView
@@ -433,25 +252,7 @@ typedef void (^RemoveColorGestureBlock)();
     } return NO;
 }
 
-- (IBAction)enableDrawingButton:(UIBarButtonItem *)sender
-{   //NSLog(@"Drawing enabled:%hhd", self.drawingEnabled);
-    }
-- (IBAction)undoButtonClicked:(UIBarButtonItem *)sender
-{
-    if (self.passUndoMethodBlock)
-        self.passUndoMethodBlock();
-}
-
-
-#pragma mark Setup
-
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    if ([keyPath isEqualToString:@"imageCaptureRect"])
-    {
-        self.imageForInstagramRect = [[change objectForKey:NSKeyValueChangeNewKey] CGRectValue];
-    }
-}
+#pragma mark - Setup -
 
 - (void)loadEditorView
 {
@@ -587,11 +388,6 @@ typedef void (^RemoveColorGestureBlock)();
     // Do any additional setup after loading the view.
 }
 
--(void)viewDidLayoutSubviews
-{
-    [super viewDidLayoutSubviews];
-}
-
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
@@ -608,20 +404,5 @@ typedef void (^RemoveColorGestureBlock)();
     [self.navigationController.navigationBar setBackgroundImage:nil
     forBarMetrics:UIBarMetricsDefault];
 }
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-}
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end
