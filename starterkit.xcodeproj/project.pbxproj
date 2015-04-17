@@ -12,6 +12,7 @@
 		9E356C6B1AD48ADB009B6ED9 /* HWGOptionsColorToStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E356C6A1AD48ADB009B6ED9 /* HWGOptionsColorToStore.m */; };
 		9E9078AE1AAA1A6900F724A1 /* OMMColouredPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E9078AB1AAA1A6900F724A1 /* OMMColouredPath.m */; };
 		9E9078AF1AAA1A6A00F724A1 /* OMMTouchableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E9078AD1AAA1A6900F724A1 /* OMMTouchableView.m */; };
+		9EBAB2481AE19B0600BA8675 /* skatecanvas blurred.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EBAB2471AE19B0600BA8675 /* skatecanvas blurred.png */; };
 		9EC9BF1F1A35EE2A0050FBE2 /* Contents.json in Resources */ = {isa = PBXBuildFile; fileRef = 9EC9BF0B1A35EE2A0050FBE2 /* Contents.json */; };
 		9EC9BF201A35EE2A0050FBE2 /* Icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EC9BF0C1A35EE2A0050FBE2 /* Icon-40.png */; };
 		9EC9BF211A35EE2A0050FBE2 /* Icon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EC9BF0D1A35EE2A0050FBE2 /* Icon-40@2x.png */; };
@@ -76,6 +77,7 @@
 		9E9078AB1AAA1A6900F724A1 /* OMMColouredPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMMColouredPath.m; sourceTree = "<group>"; };
 		9E9078AC1AAA1A6900F724A1 /* OMMTouchableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMMTouchableView.h; sourceTree = "<group>"; };
 		9E9078AD1AAA1A6900F724A1 /* OMMTouchableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMMTouchableView.m; sourceTree = "<group>"; };
+		9EBAB2471AE19B0600BA8675 /* skatecanvas blurred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "skatecanvas blurred.png"; sourceTree = "<group>"; };
 		9EC9BF0B1A35EE2A0050FBE2 /* Contents.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Contents.json; sourceTree = "<group>"; };
 		9EC9BF0C1A35EE2A0050FBE2 /* Icon-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-40.png"; sourceTree = "<group>"; };
 		9EC9BF0D1A35EE2A0050FBE2 /* Icon-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-40@2x.png"; sourceTree = "<group>"; };
@@ -253,6 +255,7 @@
 				9ECB3A691A41D34A006E7B32 /* TouchDrawView.h */,
 				9ECB3A6A1A41D34A006E7B32 /* TouchDrawView.m */,
 				9ECF1C8C1A2697DD00D2F5ED /* Images.xcassets */,
+				9EBAB2471AE19B0600BA8675 /* skatecanvas blurred.png */,
 				9ECF1C8E1A2697DD00D2F5ED /* LaunchScreen.xib */,
 				9ECF1C7F1A2697DD00D2F5ED /* Supporting Files */,
 			);
@@ -389,6 +392,7 @@
 				9EC9BF301A35EE2A0050FBE2 /* Icon@2x.png in Resources */,
 				9ECF1C8B1A2697DD00D2F5ED /* Main.storyboard in Resources */,
 				9EC9BF2F1A35EE2A0050FBE2 /* Icon.png in Resources */,
+				9EBAB2481AE19B0600BA8675 /* skatecanvas blurred.png in Resources */,
 				9EC9BF2D1A35EE2A0050FBE2 /* Icon-Small-50.png in Resources */,
 				9EC9BF341A35F50F0050FBE2 /* wheel.png in Resources */,
 				9EC9BF291A35EE2A0050FBE2 /* Icon-Small@3x.png in Resources */,
