@@ -27,7 +27,6 @@
         self.pathArray = [[NSMutableArray alloc] init];
         self.path = [[UIBezierPath alloc]init];
         self.BackgroundColor = [UIColor clearColor];
-            NSLog(@"gets called");
         self.userInteractionEnabled = YES;
        // [self setMultipleTouchEnabled:YES]; // Not sure if I want to do this yet
     }
@@ -65,7 +64,7 @@
     //self.lastPointOfLastStroke = [touch locationInView:self];
     UIBezierPath *instanceOfLastPath = self.path;
     [self.pathArray addObject:instanceOfLastPath];
-    //NSLog(@"Number of paths:%d", [self.pathArray count]);
+    // NSLog(@"Number of paths:%d", [self.pathArray count]);
         
         
     if (self.deckViewControllerProperty.passUndoMethodBlock)

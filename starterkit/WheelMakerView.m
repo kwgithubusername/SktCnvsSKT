@@ -64,7 +64,7 @@
 
 - (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
 {
-    NSLog(@"Failed to retrieve ad");
+    // NSLog(@"Failed to retrieve ad");
     if (_bannerIsVisible)
     {
         [UIView beginAnimations:@"animateAdBannerOff" context:NULL];
@@ -122,9 +122,7 @@
         // Redraw the paths, as they have been changed to white
         [path stroke];
         [path2 stroke];
-    
-    self.imageCaptureRect = CGRectMake(0, 75*scaleFactor, width, width);
-    
+        
     _adBanner = [[ADBannerView alloc] initWithFrame:CGRectMake(0,self.bounds.size.height-45, 320, 50)];
     _adBanner.delegate = self;
 }

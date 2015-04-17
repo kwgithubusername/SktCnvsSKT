@@ -65,7 +65,7 @@
 
 - (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
 {
-    NSLog(@"Failed to retrieve ad");
+    // NSLog(@"Failed to retrieve ad");
     if (_bannerIsVisible)
     {
         [UIView beginAnimations:@"animateAdBannerOff" context:NULL];
@@ -85,7 +85,7 @@
 }
 
 - (void)drawRect:(CGRect)aRect {
-    NSLog(@"drawRect called");
+    // NSLog(@"drawRect called");
     CGFloat width = self.bounds.size.width; //width of the screen
     CGFloat height = self.bounds.size.height; //height of the screen
     
@@ -188,9 +188,7 @@
         CGContextSetBlendMode(ctx, kCGBlendModeNormal);
         [path stroke];
         [path2 stroke];
-    
-    self.imageCaptureRect = CGRectMake(0, 50*scaleFactor, width, width);
-    
+        
     _adBanner = [[ADBannerView alloc] initWithFrame:CGRectMake(0,self.bounds.size.height-45, 320, 50)];
     _adBanner.delegate = self;
 }

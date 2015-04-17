@@ -66,7 +66,56 @@
             </objects>
             <point key="canvasLocation" x="2263" y="168"/>
         </scene>
-        <!--Select Template-->
+        <!--About-->
+        <scene sceneID="ACF-g1-tm7">
+            <objects>
+                <viewController title="About" automaticallyAdjustsScrollViewInsets="NO" id="3vM-ZD-cav" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="MrO-l1-TMO"/>
+                        <viewControllerLayoutGuide type="bottom" id="mRV-is-aO7"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="bYY-sp-F5J">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kVF-tQ-e59">
+                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <mutableString key="text">Acknowledgements
+Portions of this software may utilize the following copyrighted material, the use of which is hereby acknowledged:
+
+Ian Grossberg - (ColorMapView)
+Copyright (c) 2014 Ian Grossberg.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Copyright © 2015 Kevin Wu. All rights reserved.
+
+4-17-15</mutableString>
+                                <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="kVF-tQ-e59" firstAttribute="leading" secondItem="bYY-sp-F5J" secondAttribute="leadingMargin" constant="-16" id="3Pe-nh-5z7"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="kVF-tQ-e59" secondAttribute="trailing" constant="-16" id="CLa-E2-bv9"/>
+                            <constraint firstItem="mRV-is-aO7" firstAttribute="top" secondItem="kVF-tQ-e59" secondAttribute="bottom" id="KqG-0k-0Ai"/>
+                            <constraint firstItem="kVF-tQ-e59" firstAttribute="top" secondItem="MrO-l1-TMO" secondAttribute="bottom" id="rLC-Go-vYg"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="About" id="1H7-NS-Bhu"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3Wd-92-UYv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1604" y="-491"/>
+        </scene>
+        <!--Skate Canvas-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
@@ -150,7 +199,14 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" title="Select Template" id="P0v-qg-q6H"/>
+                    <navigationItem key="navigationItem" title="Skate Canvas" id="P0v-qg-q6H">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="uOX-pi-D3e"/>
+                        <barButtonItem key="rightBarButtonItem" title="About" id="qHG-Sw-xjJ">
+                            <connections>
+                                <segue destination="3vM-ZD-cav" kind="show" id="KS0-Ac-qtL"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

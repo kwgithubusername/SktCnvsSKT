@@ -258,7 +258,7 @@ typedef void (^RemoveColorGestureBlock)();
 {
     if ([self.editorString isEqualToString:@"deck"])
     {
-        NSLog(@"We're making a deck");
+        // NSLog(@"We're making a deck");
         self.currentView = nil;
         DeckMakerView *view = [[DeckMakerView alloc] initWithFrame:self.view.frame];
         view.tag = 999;
@@ -266,12 +266,12 @@ typedef void (^RemoveColorGestureBlock)();
         self.currentView = view;
         [view addObserver:self forKeyPath:@"imageCaptureRect" options:NSKeyValueObservingOptionNew context:NULL];
         [self.view addSubview:self.currentView];
-        //NSLog(@"Numberofsubviews: %d", [[self.view subviews] count]);
+        // NSLog(@"Numberofsubviews: %d", [[self.view subviews] count]);
     }
     
     if ([self.editorString isEqualToString:@"truck"])
     {
-        NSLog(@"We're making a truck");
+        // NSLog(@"We're making a truck");
         self.currentView = nil;
         TruckMakerView *view = [[TruckMakerView alloc] initWithFrame:self.view.frame];
         view.tag = 999;
@@ -284,7 +284,7 @@ typedef void (^RemoveColorGestureBlock)();
     
     if ([self.editorString isEqualToString:@"wheel"])
     {
-        NSLog(@"We're making a wheel");
+        // NSLog(@"We're making a wheel");
         self.currentView = nil;
         WheelMakerView *view = [[WheelMakerView alloc] initWithFrame:self.view.frame];
         view.tag = 999;
@@ -296,7 +296,7 @@ typedef void (^RemoveColorGestureBlock)();
     
     if ([self.editorString isEqualToString:@"tee"])
     {
-        NSLog(@"We're making a tee");
+        // NSLog(@"We're making a tee");
         self.currentView = nil;
         TeeMakerView *view = [[TeeMakerView alloc] initWithFrame:self.view.frame];
         view.tag = 999;

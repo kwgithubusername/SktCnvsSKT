@@ -60,7 +60,7 @@
 
 - (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
 {
-    NSLog(@"Failed to retrieve ad");
+    // NSLog(@"Failed to retrieve ad");
     if (_bannerIsVisible)
     {
         [UIView beginAnimations:@"animateAdBannerOff" context:NULL];
@@ -105,10 +105,9 @@
 
 - (void)drawRect:(CGRect)aRect
 {
-    NSLog(@"drawRect called");
+    // NSLog(@"drawRect called");
     CGFloat width = self.bounds.size.width; //width of the screen
     CGFloat height = self.bounds.size.height-70; //height of the screen
-    NSLog(@"%f", height);
     
     CGFloat scaleFactor = [self scaleFactorForDevice];
     
@@ -180,14 +179,6 @@
     
     // Redraw the path, as it has been changed to white
     [path stroke];
-    
-//    CGFloat adjustedXOrigin = [self adjustedXOriginForDevice];
-//    CGFloat adjustedYOrigin = [self adjustedYOriginForDevice];
-//    CGFloat adjustedHeight = [self adjustedHeightForDevice];
-//    CGFloat adjustedWidth = [self adjustedWidthForDevice];
-//    NSLog(@"Adjusted width and height should be roughly the same for this to work: width %f, height %f", adjustedWidth, adjustedHeight);
-//    self.imageCaptureRect = CGRectMake(adjustedXOrigin, adjustedYOrigin, adjustedWidth, adjustedHeight);
-//    UIBezierPath *markerPath = [[UIBezierPath alloc] init];
 
     _adBanner = [[ADBannerView alloc] initWithFrame:CGRectMake(0,self.bounds.size.height-45, 320, 50)];
     _adBanner.delegate = self;
