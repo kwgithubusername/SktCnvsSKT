@@ -41,6 +41,8 @@ typedef void (^RemoveColorGestureBlock)();
 
 @implementation DeckViewController
 
+#pragma mark - Base color picker -
+
 -(HWGOptionsColorToStore *)colorStorage
 {
     if (!_colorStorage) _colorStorage = [[HWGOptionsColorToStore alloc] init];
@@ -149,7 +151,7 @@ typedef void (^RemoveColorGestureBlock)();
     }
 }
 
-#pragma mark Instagram sharing
+#pragma mark - Instagram sharing -
 
 - (IBAction)shareButtonClicked:(UIBarButtonItem *)sender
 {
@@ -269,7 +271,7 @@ typedef void (^RemoveColorGestureBlock)();
     return interactionController;
 }
 
-#pragma mark Drawing
+#pragma mark - Drawing -
 
 - (IBAction)drawButtonClicked:(UIBarButtonItem *)sender
 {
@@ -330,7 +332,7 @@ typedef void (^RemoveColorGestureBlock)();
 
 }
 
-#pragma mark View and Image Management
+#pragma mark - View and Image Management -
 
 -(void)setScrollView:(UIScrollView *)scrollView
 {
@@ -363,7 +365,7 @@ typedef void (^RemoveColorGestureBlock)();
     self.scrollView.contentSize = self.image ? self.image.size : CGSizeZero; // If the struct becomes nil the result would be undefined
 }
 
-#pragma mark Add Photo
+#pragma mark - Add Photo -
 
 - (IBAction)saveImage:(UIBarButtonItem *)sender {
     
@@ -371,7 +373,10 @@ typedef void (^RemoveColorGestureBlock)();
 }
 
 - (IBAction)addPhoto:(UIBarButtonItem *)sender
-{   [self.spinner startAnimating];
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.spinner startAnimating];
+    });
     if (![[self class] canAddPhoto])
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No camera detected" message:@"This device does not have a camera." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
