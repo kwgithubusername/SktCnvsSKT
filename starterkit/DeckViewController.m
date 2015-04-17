@@ -34,8 +34,8 @@ typedef void (^RemoveColorGestureBlock)();
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *baseColorBarButton;
 @property (nonatomic) ColorMapView *colorView;
 @property (nonatomic) HWGOptionsColorToStore *colorStorage;
-@property (nonatomic) BOOL viewPushedByNavigationBar;
 @property (nonatomic) BOOL isPickingColor;
+
 
 @end
 
@@ -418,8 +418,7 @@ typedef void (^RemoveColorGestureBlock)();
     [self dismissViewControllerAnimated:YES completion:NULL];
     [self.currentView setNeedsDisplay];
     [self.spinner stopAnimating];
-    CGPoint contentOffsetCGPoint = CGPointMake(self.scrollView.contentOffset.x, self.scrollView.contentOffset.y+88);
-    self.scrollView.contentOffset = contentOffsetCGPoint;
+    [self makeNavigationBarTransparent];
 }
 
 +(BOOL)canAddPhoto
@@ -554,14 +553,24 @@ typedef void (^RemoveColorGestureBlock)();
 
 #pragma mark - View methods -
 
+-(void)makeNavigationBarTransparent
+{
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
+                                                  forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.shadowImage = [UIImage new];
+    self.navigationController.navigationBar.translucent = YES;
+    self.navigationController.view.backgroundColor = [UIColor clearColor];
+    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self makeNavigationBarTransparent];
     self.drawingEnabled = NO;
     self.touchDrawViewCreated = NO;
     [self.spinner stopAnimating];
     self.navigationController.toolbarHidden = NO;
-    self.navigationController.navigationBar.hidden = YES;
     
     [self.scrollView insertSubview:self.imageView atIndex:0];
     
@@ -570,20 +579,12 @@ typedef void (^RemoveColorGestureBlock)();
     
     [self loadBaseColor];
     [self loadEditorView];
-    
-    __weak DeckViewController *weakSelf = self;
-    
-    [[NSNotificationCenter defaultCenter] addObserverForName:@"UIViewAnimationDidCommitNotification"
-                              object:nil
-                               queue:nil
-                          usingBlock:^(NSNotification* notification){
-                    
-                                    if ([[notification userInfo][@"name"] isEqual:@"UINavigationControllerHideShowNavigationBar"])
-                                    {
-                                        [weakSelf pushViewBasedOnNavigationBarChange];
-                                    };
-                          }];
     // Do any additional setup after loading the view.
+}
+
+-(void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -599,48 +600,13 @@ typedef void (^RemoveColorGestureBlock)();
             }
         }
     }
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UINavigationControllerHideShowNavigationBar" object:nil];
-}
-
--(void)pushViewBasedOnNavigationBarChange
-{
-    if (self.navigationController.navigationBarHidden == YES)
-    {
-        NSLog(@"navbar is being hidden");
-        [self pushViewDownToCounterNavigationBarBeingHidden];
-    }
-    else
-    {
-        NSLog(@"navbar is becoming visible");
-        [self pushViewUpToCounterNavigationBarBeingShown];
-    }
-    NSLog(@"contentoffset.y is %f", self.scrollView.contentOffset.y);
-}
-
--(void)pushViewDownToCounterNavigationBarBeingHidden
-{
-    if (!self.viewPushedByNavigationBar)
-    {
-        CGPoint contentOffsetCGPoint = CGPointMake(self.scrollView.contentOffset.x, self.scrollView.contentOffset.y-88);
-        self.scrollView.contentOffset = contentOffsetCGPoint;
-        self.viewPushedByNavigationBar = YES;
-    }
-}
-
--(void)pushViewUpToCounterNavigationBarBeingShown
-{
-    if (self.viewPushedByNavigationBar)
-    {
-        CGPoint contentOffsetCGPoint = CGPointMake(self.scrollView.contentOffset.x, self.scrollView.contentOffset.y+88);
-        self.scrollView.contentOffset = contentOffsetCGPoint;
-        self.viewPushedByNavigationBar = NO;
-    }
+    [self.navigationController.navigationBar setBackgroundImage:nil
+    forBarMetrics:UIBarMetricsDefault];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [[self navigationController] setNavigationBarHidden:NO animated:YES];
 }
 
 /*
