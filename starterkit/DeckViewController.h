@@ -14,7 +14,7 @@
 #import "ViewController.h"
 #import "OMMTouchableView.h"
 typedef void (^PassUndoMethodFromTouchDrawViewBlock)();
-@interface DeckViewController : UIViewController
+@interface DeckViewController : UIViewController <ADBannerViewDelegate>
 @property (nonatomic, weak) NSString *editorString;
 @property (nonatomic, copy) PassUndoMethodFromTouchDrawViewBlock passUndoMethodBlock;
 @end

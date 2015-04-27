@@ -17,7 +17,10 @@ typedef void (^CancelTouchesInViewBlock)();
 typedef void (^RemoveColorGestureBlock)();
 
 @interface DeckViewController () <UIScrollViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate, UIDocumentInteractionControllerDelegate>
-
+{
+    BOOL _bannerIsVisible;
+    ADBannerView *_adBanner;
+}
 @property (nonatomic) UIDocumentInteractionController *documentController;
 @property (nonatomic, strong) UIImageView *imageView; // to display the image - lazily instantiate
 @property (nonatomic, strong) UIImage *image; // the image we're displaying - no instance variable
@@ -39,6 +42,73 @@ typedef void (^RemoveColorGestureBlock)();
 
 @implementation DeckViewController
 
+#pragma mark - Ad banner -
+
+- (void)bannerViewDidLoadAd:(ADBannerView *)banner
+{
+    if (!_bannerIsVisible)
+    {
+        // If banner isn't part of view hierarchy, add it
+        if (_adBanner.superview == nil)
+        {
+            [self.view addSubview:_adBanner];
+        }
+        
+        [UIView beginAnimations:@"animateAdBannerOn" context:NULL];
+        
+        // Assumes the banner view is just off the bottom of the screen.
+        banner.frame = CGRectOffset(banner.frame, 0, -banner.frame.size.height);
+        
+        [UIView commitAnimations];
+        
+        _bannerIsVisible = YES;
+    }
+    
+    if (self.navigationController.toolbarHidden == YES)
+    {
+        _adBanner.userInteractionEnabled = NO;
+    }
+}
+
+- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
+{
+    // NSLog(@"Failed to retrieve ad");
+    if (_bannerIsVisible)
+    {
+        [UIView beginAnimations:@"animateAdBannerOff" context:NULL];
+        
+        // Assumes the banner view is placed at the bottom of the screen.
+        banner.frame = CGRectOffset(banner.frame, 0, banner.frame.size.height);
+        
+        [UIView commitAnimations];
+        
+        _bannerIsVisible = NO;
+    }
+    
+    if (self.navigationController.toolbarHidden == YES)
+    {
+        _adBanner.userInteractionEnabled = NO;
+    }
+}
+
+-(void)disableAds
+{
+    for (ADBannerView *adBanner in self.view.subviews)
+    {
+        adBanner.userInteractionEnabled = NO;
+        _bannerIsVisible = NO;
+    }
+}
+
+-(void)enableAds
+{
+    for (ADBannerView *adBanner in self.view.subviews)
+    {
+        adBanner.userInteractionEnabled = YES;
+        _bannerIsVisible = YES;
+    }
+}
+
 #pragma mark - Base color picker -
 
 -(HWGOptionsColorToStore *)colorStorage
@@ -56,6 +126,8 @@ typedef void (^RemoveColorGestureBlock)();
 {
     self.navigationController.toolbarHidden = YES;
     self.navigationController.navigationBar.hidden = YES;
+    [self disableAds];
+    
     CGRect viewFrame = [[UIScreen mainScreen] bounds];
     CGFloat statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
     self.colorView = [[ColorMapView alloc] initWithFrame:CGRectMake(viewFrame.origin.x, viewFrame.origin.y+statusBarHeight, viewFrame.size.width, viewFrame.size.height)];
@@ -89,6 +161,7 @@ typedef void (^RemoveColorGestureBlock)();
     [self checkForExistingGestureRecognizersAndReapplyGestureRecognizersAsNeeded];
     self.navigationController.toolbarHidden = NO;
     self.navigationController.navigationBar.hidden = NO;
+    [self enableAds];
 }
 
 -(void)checkForExistingGestureRecognizersAndReapplyGestureRecognizersAsNeeded
@@ -388,6 +461,13 @@ typedef void (^RemoveColorGestureBlock)();
     }
     [self.navigationController.navigationBar setBackgroundImage:nil
     forBarMetrics:UIBarMetricsDefault];
+}
+
+-(void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    _adBanner = [[ADBannerView alloc] initWithFrame:CGRectMake(0,self.currentView.bounds.size.height-45, 320, 50)];
+    _adBanner.delegate = self;
 }
 
 @end

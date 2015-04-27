@@ -10,6 +10,6 @@
 #import "DeckViewController.h"
 #import <iAd/iAd.h>
 
-@interface WheelMakerView : UIView <ADBannerViewDelegate>
+@interface WheelMakerView : UIView
 
 @end

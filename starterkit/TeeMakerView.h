@@ -10,5 +10,5 @@
 #import "DeckViewController.h"
 #import <iAd/iAd.h>
 
-@interface TeeMakerView : UIView <ADBannerViewDelegate>
+@interface TeeMakerView : UIView
 @end

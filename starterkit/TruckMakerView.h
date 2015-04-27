@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 #import "DeckViewController.h"
 #import <iAd/iAd.h>
-@interface TruckMakerView : UIView <ADBannerViewDelegate>
+@interface TruckMakerView : UIView
 @end
