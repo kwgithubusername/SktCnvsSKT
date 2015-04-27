@@ -55,9 +55,10 @@ typedef void (^RemoveColorGestureBlock)();
 -(void)showColorPicker
 {
     self.navigationController.toolbarHidden = YES;
+    self.navigationController.navigationBar.hidden = YES;
     CGRect viewFrame = [[UIScreen mainScreen] bounds];
     CGFloat statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
-    self.colorView = [[ColorMapView alloc] initWithFrame:CGRectMake(viewFrame.origin.x, viewFrame.origin.y+statusBarHeight+44, viewFrame.size.width, viewFrame.size.height)];
+    self.colorView = [[ColorMapView alloc] initWithFrame:CGRectMake(viewFrame.origin.x, viewFrame.origin.y+statusBarHeight, viewFrame.size.width, viewFrame.size.height)];
     self.colorView.tag = 130;
     
     [UIView transitionWithView:self.view
@@ -87,6 +88,7 @@ typedef void (^RemoveColorGestureBlock)();
     [self removeColorTapGestureRecognizer:tapGestureRecognizer];
     [self checkForExistingGestureRecognizersAndReapplyGestureRecognizersAsNeeded];
     self.navigationController.toolbarHidden = NO;
+    self.navigationController.navigationBar.hidden = NO;
 }
 
 -(void)checkForExistingGestureRecognizersAndReapplyGestureRecognizersAsNeeded
