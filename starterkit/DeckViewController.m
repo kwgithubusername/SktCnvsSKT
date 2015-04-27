@@ -34,8 +34,6 @@ typedef void (^RemoveColorGestureBlock)();
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *baseColorBarButton;
 @property (nonatomic) ColorMapView *colorView;
 @property (nonatomic) HWGOptionsColorToStore *colorStorage;
-@property (nonatomic) BOOL isPickingColor;
-
 
 @end
 
@@ -51,21 +49,15 @@ typedef void (^RemoveColorGestureBlock)();
 
 - (IBAction)baseColorButtonClicked:(UIBarButtonItem *)sender
 {
-    if (!self.isPickingColor)
-    {
-        [self showColorPicker];
-    }
-    else
-    {
-        [self hideColorPicker];
-    }
+    [self showColorPicker];
 }
 
 -(void)showColorPicker
 {
+    self.navigationController.toolbarHidden = YES;
     CGRect viewFrame = [[UIScreen mainScreen] bounds];
     CGFloat statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
-    self.colorView = [[ColorMapView alloc] initWithFrame:CGRectMake(viewFrame.origin.x, viewFrame.origin.y+statusBarHeight+44, viewFrame.size.width, viewFrame.size.height-44*3-statusBarHeight)];
+    self.colorView = [[ColorMapView alloc] initWithFrame:CGRectMake(viewFrame.origin.x, viewFrame.origin.y+statusBarHeight+44, viewFrame.size.width, viewFrame.size.height)];
     self.colorView.tag = 130;
     
     [UIView transitionWithView:self.view
@@ -78,20 +70,11 @@ typedef void (^RemoveColorGestureBlock)();
     UITapGestureRecognizer *tapToSelectColorGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectColor:)];
     [self.view addGestureRecognizer:tapToSelectColorGestureRecognizer];
     tapToSelectColorGestureRecognizer.view.tag = 131;
-    self.isPickingColor = YES;
-}
-
--(void)hideColorPicker
-{
-    [self removeColorView];
-    [self removeColorTapGestureRecognizer:nil];
-    [self checkForExistingGestureRecognizersAndReapplyGestureRecognizersAsNeeded];
-    self.isPickingColor = NO;
 }
 
 -(void)selectColor:(UITapGestureRecognizer *)tapGestureRecognizer
 {
-    if (tapGestureRecognizer && self.isPickingColor)
+    if (tapGestureRecognizer)
     {
         CGPoint point = [tapGestureRecognizer locationInView:self.colorView];
         UIColor *selectedColor = [self.colorView getColorAtLocation:point];
@@ -103,7 +86,7 @@ typedef void (^RemoveColorGestureBlock)();
     [self removeColorView];
     [self removeColorTapGestureRecognizer:tapGestureRecognizer];
     [self checkForExistingGestureRecognizersAndReapplyGestureRecognizersAsNeeded];
-    self.isPickingColor = NO;
+    self.navigationController.toolbarHidden = NO;
 }
 
 -(void)checkForExistingGestureRecognizersAndReapplyGestureRecognizersAsNeeded
