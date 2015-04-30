@@ -6,14 +6,14 @@
 //  Copyright (c) 2014 Hi Range. All rights reserved.
 //
 
-#import "WheelMakerView.h"
-@interface WheelMakerView ()
+#import "SKTWheelMakerView.h"
+@interface SKTWheelMakerView ()
 {
     BOOL _bannerIsVisible;
     ADBannerView *_adBanner;
 }
 @end
-@implementation WheelMakerView
+@implementation SKTWheelMakerView
 
 
 - (void)setup

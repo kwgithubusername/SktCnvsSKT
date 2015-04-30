@@ -7,14 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DeckMakerView.h"
-#import "TruckMakerView.h"
-#import "WheelMakerView.h"
-#import "TeeMakerView.h"
-#import "ViewController.h"
-#import "OMMTouchableView.h"
+#import "SKTDeckMakerView.h"
+#import "SKTTruckMakerView.h"
+#import "SKTWheelMakerView.h"
+#import "SKTTeeMakerView.h"
+#import "SKTMenuViewController.h"
 typedef void (^PassUndoMethodFromTouchDrawViewBlock)();
-@interface DeckViewController : UIViewController <ADBannerViewDelegate>
+@interface SKTEditorViewController : UIViewController <ADBannerViewDelegate>
 @property (nonatomic, weak) NSString *editorString;
 @property (nonatomic, copy) PassUndoMethodFromTouchDrawViewBlock passUndoMethodBlock;
 @end

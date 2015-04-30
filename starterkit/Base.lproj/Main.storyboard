@@ -5,10 +5,10 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Deck View Controller-->
+        <!--Editor View Controller-->
         <scene sceneID="BtT-jb-oyu">
             <objects>
-                <viewController id="FMr-SY-H3t" customClass="DeckViewController" sceneMemberID="viewController">
+                <viewController id="FMr-SY-H3t" customClass="SKTEditorViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="0Jj-Cg-kvX"/>
                         <viewControllerLayoutGuide type="bottom" id="uPU-Am-gvF"/>
@@ -118,7 +118,7 @@ Copyright © 2015 Kevin Wu. All rights reserved.
         <!--Skate Canvas-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="SKTMenuViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -139,7 +139,7 @@ Copyright © 2015 Kevin Wu. All rights reserved.
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="FMr-SY-H3t" kind="show" identifier="wheelEditor" id="YEn-FL-6zo"/>
+                                            <segue destination="FMr-SY-H3t" kind="show" identifier="wheel" id="YEn-FL-6zo"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X6Z-5g-93w">
@@ -151,7 +151,7 @@ Copyright © 2015 Kevin Wu. All rights reserved.
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="FMr-SY-H3t" kind="show" identifier="teeEditor" id="JYU-d2-8ut"/>
+                                            <segue destination="FMr-SY-H3t" kind="show" identifier="tee" id="JYU-d2-8ut"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w15-Qm-EXV">
@@ -163,7 +163,7 @@ Copyright © 2015 Kevin Wu. All rights reserved.
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="FMr-SY-H3t" kind="show" identifier="truckEditor" id="kjd-Pp-glW"/>
+                                            <segue destination="FMr-SY-H3t" kind="show" identifier="truck" id="kjd-Pp-glW"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mm7-E1-BYA">
@@ -175,7 +175,7 @@ Copyright © 2015 Kevin Wu. All rights reserved.
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="FMr-SY-H3t" kind="show" identifier="deckEditor" id="Xpz-xr-xez"/>
+                                            <segue destination="FMr-SY-H3t" kind="show" identifier="deck" id="Xpz-xr-xez"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -238,6 +238,6 @@ Copyright © 2015 Kevin Wu. All rights reserved.
         <image name="wheel.png" width="300" height="300"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="kjd-Pp-glW"/>
+        <segue reference="Xpz-xr-xez"/>
     </inferredMetricsTieBreakers>
 </document>

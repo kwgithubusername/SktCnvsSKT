@@ -10,8 +10,6 @@
 		22FECA3578FB9C9E776C2B6A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 571FCDFED05A3148BE8F3CFE /* libPods.a */; };
 		9E356C681AD48381009B6ED9 /* colorGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E356C671AD48381009B6ED9 /* colorGradient.png */; };
 		9E356C6B1AD48ADB009B6ED9 /* HWGOptionsColorToStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E356C6A1AD48ADB009B6ED9 /* HWGOptionsColorToStore.m */; };
-		9E9078AE1AAA1A6900F724A1 /* OMMColouredPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E9078AB1AAA1A6900F724A1 /* OMMColouredPath.m */; };
-		9E9078AF1AAA1A6A00F724A1 /* OMMTouchableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E9078AD1AAA1A6900F724A1 /* OMMTouchableView.m */; };
 		9EBAB2481AE19B0600BA8675 /* skatecanvas blurred.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EBAB2471AE19B0600BA8675 /* skatecanvas blurred.png */; };
 		9EC9BF1F1A35EE2A0050FBE2 /* Contents.json in Resources */ = {isa = PBXBuildFile; fileRef = 9EC9BF0B1A35EE2A0050FBE2 /* Contents.json */; };
 		9EC9BF201A35EE2A0050FBE2 /* Icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EC9BF0C1A35EE2A0050FBE2 /* Icon-40.png */; };
@@ -35,21 +33,19 @@
 		9EC9BF321A35EE2A0050FBE2 /* iTunesArtwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EC9BF1E1A35EE2A0050FBE2 /* iTunesArtwork@2x.png */; };
 		9EC9BF341A35F50F0050FBE2 /* wheel.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EC9BF331A35F50F0050FBE2 /* wheel.png */; };
 		9EC9BF361A35F6790050FBE2 /* deck.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EC9BF351A35F6790050FBE2 /* deck.png */; };
-		9ECB32CE1A3FA50000A941EB /* TruckMakerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ECB32CD1A3FA50000A941EB /* TruckMakerView.m */; };
-		9ECB32D11A3FA8D400A941EB /* WheelMakerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ECB32D01A3FA8D400A941EB /* WheelMakerView.m */; };
-		9ECB32D41A3FA9FF00A941EB /* TeeMakerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ECB32D31A3FA9FF00A941EB /* TeeMakerView.m */; };
-		9ECB3A681A41D2FA006E7B32 /* Line.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ECB3A671A41D2FA006E7B32 /* Line.m */; };
-		9ECB3A6B1A41D34A006E7B32 /* TouchDrawView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ECB3A6A1A41D34A006E7B32 /* TouchDrawView.m */; };
+		9ECB32CE1A3FA50000A941EB /* SKTTruckMakerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ECB32CD1A3FA50000A941EB /* SKTTruckMakerView.m */; };
+		9ECB32D11A3FA8D400A941EB /* SKTWheelMakerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ECB32D01A3FA8D400A941EB /* SKTWheelMakerView.m */; };
+		9ECB32D41A3FA9FF00A941EB /* SKTTeeMakerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ECB32D31A3FA9FF00A941EB /* SKTTeeMakerView.m */; };
 		9ECB535D1A2F71DF003308F5 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ECB535C1A2F71DF003308F5 /* MobileCoreServices.framework */; };
 		9ECF1C821A2697DD00D2F5ED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ECF1C811A2697DD00D2F5ED /* main.m */; };
 		9ECF1C851A2697DD00D2F5ED /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ECF1C841A2697DD00D2F5ED /* AppDelegate.m */; };
-		9ECF1C881A2697DD00D2F5ED /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ECF1C871A2697DD00D2F5ED /* ViewController.m */; };
+		9ECF1C881A2697DD00D2F5ED /* SKTMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ECF1C871A2697DD00D2F5ED /* SKTMenuViewController.m */; };
 		9ECF1C8B1A2697DD00D2F5ED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9ECF1C891A2697DD00D2F5ED /* Main.storyboard */; };
 		9ECF1C8D1A2697DD00D2F5ED /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9ECF1C8C1A2697DD00D2F5ED /* Images.xcassets */; };
 		9ECF1C901A2697DD00D2F5ED /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9ECF1C8E1A2697DD00D2F5ED /* LaunchScreen.xib */; };
 		9ECF1C9C1A2697DD00D2F5ED /* starterkitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ECF1C9B1A2697DD00D2F5ED /* starterkitTests.m */; };
-		9ECF1CA71A26982F00D2F5ED /* DeckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ECF1CA61A26982F00D2F5ED /* DeckViewController.m */; };
-		9ED7DFF01A2D0BF700A9DE54 /* DeckMakerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ED7DFEF1A2D0BF700A9DE54 /* DeckMakerView.m */; };
+		9ECF1CA71A26982F00D2F5ED /* SKTEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ECF1CA61A26982F00D2F5ED /* SKTEditorViewController.m */; };
+		9ED7DFF01A2D0BF700A9DE54 /* SKTDeckMakerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ED7DFEF1A2D0BF700A9DE54 /* SKTDeckMakerView.m */; };
 		9EED01FE1A35182C0025E974 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EED01FD1A35182C0025E974 /* iAd.framework */; };
 		9EED02001A3527200025E974 /* warehouse.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9EED01FF1A3527200025E974 /* warehouse.jpg */; };
 		9EED02061A352AFD0025E974 /* truck.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EED02021A352AFD0025E974 /* truck.png */; };
@@ -73,10 +69,6 @@
 		9E356C671AD48381009B6ED9 /* colorGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = colorGradient.png; sourceTree = "<group>"; };
 		9E356C691AD48ADB009B6ED9 /* HWGOptionsColorToStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HWGOptionsColorToStore.h; sourceTree = "<group>"; };
 		9E356C6A1AD48ADB009B6ED9 /* HWGOptionsColorToStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HWGOptionsColorToStore.m; sourceTree = "<group>"; };
-		9E9078AA1AAA1A6900F724A1 /* OMMColouredPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMMColouredPath.h; sourceTree = "<group>"; };
-		9E9078AB1AAA1A6900F724A1 /* OMMColouredPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMMColouredPath.m; sourceTree = "<group>"; };
-		9E9078AC1AAA1A6900F724A1 /* OMMTouchableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMMTouchableView.h; sourceTree = "<group>"; };
-		9E9078AD1AAA1A6900F724A1 /* OMMTouchableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMMTouchableView.m; sourceTree = "<group>"; };
 		9EBAB2471AE19B0600BA8675 /* skatecanvas blurred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "skatecanvas blurred.png"; sourceTree = "<group>"; };
 		9EC9BF0B1A35EE2A0050FBE2 /* Contents.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Contents.json; sourceTree = "<group>"; };
 		9EC9BF0C1A35EE2A0050FBE2 /* Icon-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-40.png"; sourceTree = "<group>"; };
@@ -100,34 +92,30 @@
 		9EC9BF1E1A35EE2A0050FBE2 /* iTunesArtwork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iTunesArtwork@2x.png"; sourceTree = "<group>"; };
 		9EC9BF331A35F50F0050FBE2 /* wheel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wheel.png; sourceTree = "<group>"; };
 		9EC9BF351A35F6790050FBE2 /* deck.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deck.png; sourceTree = "<group>"; };
-		9ECB32CC1A3FA50000A941EB /* TruckMakerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TruckMakerView.h; sourceTree = "<group>"; };
-		9ECB32CD1A3FA50000A941EB /* TruckMakerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TruckMakerView.m; sourceTree = "<group>"; };
-		9ECB32CF1A3FA8D400A941EB /* WheelMakerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WheelMakerView.h; sourceTree = "<group>"; };
-		9ECB32D01A3FA8D400A941EB /* WheelMakerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WheelMakerView.m; sourceTree = "<group>"; };
-		9ECB32D21A3FA9FF00A941EB /* TeeMakerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeeMakerView.h; sourceTree = "<group>"; };
-		9ECB32D31A3FA9FF00A941EB /* TeeMakerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeeMakerView.m; sourceTree = "<group>"; };
-		9ECB3A661A41D2FA006E7B32 /* Line.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Line.h; sourceTree = "<group>"; };
-		9ECB3A671A41D2FA006E7B32 /* Line.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Line.m; sourceTree = "<group>"; };
-		9ECB3A691A41D34A006E7B32 /* TouchDrawView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchDrawView.h; sourceTree = "<group>"; };
-		9ECB3A6A1A41D34A006E7B32 /* TouchDrawView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchDrawView.m; sourceTree = "<group>"; };
+		9ECB32CC1A3FA50000A941EB /* SKTTruckMakerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKTTruckMakerView.h; sourceTree = "<group>"; };
+		9ECB32CD1A3FA50000A941EB /* SKTTruckMakerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKTTruckMakerView.m; sourceTree = "<group>"; };
+		9ECB32CF1A3FA8D400A941EB /* SKTWheelMakerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKTWheelMakerView.h; sourceTree = "<group>"; };
+		9ECB32D01A3FA8D400A941EB /* SKTWheelMakerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKTWheelMakerView.m; sourceTree = "<group>"; };
+		9ECB32D21A3FA9FF00A941EB /* SKTTeeMakerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKTTeeMakerView.h; sourceTree = "<group>"; };
+		9ECB32D31A3FA9FF00A941EB /* SKTTeeMakerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKTTeeMakerView.m; sourceTree = "<group>"; };
 		9ECB535C1A2F71DF003308F5 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		9ECF1C7C1A2697DD00D2F5ED /* starterkit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = starterkit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9ECF1C801A2697DD00D2F5ED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9ECF1C811A2697DD00D2F5ED /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		9ECF1C831A2697DD00D2F5ED /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9ECF1C841A2697DD00D2F5ED /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		9ECF1C861A2697DD00D2F5ED /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		9ECF1C871A2697DD00D2F5ED /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		9ECF1C861A2697DD00D2F5ED /* SKTMenuViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKTMenuViewController.h; sourceTree = "<group>"; };
+		9ECF1C871A2697DD00D2F5ED /* SKTMenuViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKTMenuViewController.m; sourceTree = "<group>"; };
 		9ECF1C8A1A2697DD00D2F5ED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9ECF1C8C1A2697DD00D2F5ED /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		9ECF1C8F1A2697DD00D2F5ED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		9ECF1C951A2697DD00D2F5ED /* starterkitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = starterkitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9ECF1C9A1A2697DD00D2F5ED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9ECF1C9B1A2697DD00D2F5ED /* starterkitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = starterkitTests.m; sourceTree = "<group>"; };
-		9ECF1CA51A26982F00D2F5ED /* DeckViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckViewController.h; sourceTree = "<group>"; };
-		9ECF1CA61A26982F00D2F5ED /* DeckViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeckViewController.m; sourceTree = "<group>"; };
-		9ED7DFEE1A2D0BF700A9DE54 /* DeckMakerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckMakerView.h; sourceTree = "<group>"; };
-		9ED7DFEF1A2D0BF700A9DE54 /* DeckMakerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeckMakerView.m; sourceTree = "<group>"; };
+		9ECF1CA51A26982F00D2F5ED /* SKTEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKTEditorViewController.h; sourceTree = "<group>"; };
+		9ECF1CA61A26982F00D2F5ED /* SKTEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKTEditorViewController.m; sourceTree = "<group>"; };
+		9ED7DFEE1A2D0BF700A9DE54 /* SKTDeckMakerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKTDeckMakerView.h; sourceTree = "<group>"; };
+		9ED7DFEF1A2D0BF700A9DE54 /* SKTDeckMakerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKTDeckMakerView.m; sourceTree = "<group>"; };
 		9EED01FD1A35182C0025E974 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		9EED01FF1A3527200025E974 /* warehouse.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = warehouse.jpg; sourceTree = "<group>"; };
 		9EED02021A352AFD0025E974 /* truck.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = truck.png; sourceTree = "<group>"; };
@@ -155,17 +143,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		9E9078B01AAA1A7800F724A1 /* TouchDraw */ = {
-			isa = PBXGroup;
-			children = (
-				9E9078AA1AAA1A6900F724A1 /* OMMColouredPath.h */,
-				9E9078AB1AAA1A6900F724A1 /* OMMColouredPath.m */,
-				9E9078AC1AAA1A6900F724A1 /* OMMTouchableView.h */,
-				9E9078AD1AAA1A6900F724A1 /* OMMTouchableView.m */,
-			);
-			name = TouchDraw;
-			sourceTree = "<group>";
-		};
 		9EC9BF091A35EE2A0050FBE2 /* ios */ = {
 			isa = PBXGroup;
 			children = (
@@ -233,27 +210,22 @@
 				9EED020D1A3546A40025E974 /* tee.png */,
 				9ECF1C831A2697DD00D2F5ED /* AppDelegate.h */,
 				9ECF1C841A2697DD00D2F5ED /* AppDelegate.m */,
-				9ECF1C861A2697DD00D2F5ED /* ViewController.h */,
-				9ECF1C871A2697DD00D2F5ED /* ViewController.m */,
+				9ECF1C861A2697DD00D2F5ED /* SKTMenuViewController.h */,
+				9ECF1C871A2697DD00D2F5ED /* SKTMenuViewController.m */,
 				9E356C671AD48381009B6ED9 /* colorGradient.png */,
 				9ECF1C891A2697DD00D2F5ED /* Main.storyboard */,
-				9ECF1CA51A26982F00D2F5ED /* DeckViewController.h */,
-				9ECF1CA61A26982F00D2F5ED /* DeckViewController.m */,
+				9ECF1CA51A26982F00D2F5ED /* SKTEditorViewController.h */,
+				9ECF1CA61A26982F00D2F5ED /* SKTEditorViewController.m */,
 				9E356C691AD48ADB009B6ED9 /* HWGOptionsColorToStore.h */,
 				9E356C6A1AD48ADB009B6ED9 /* HWGOptionsColorToStore.m */,
-				9ED7DFEE1A2D0BF700A9DE54 /* DeckMakerView.h */,
-				9ED7DFEF1A2D0BF700A9DE54 /* DeckMakerView.m */,
-				9ECB32CC1A3FA50000A941EB /* TruckMakerView.h */,
-				9ECB32CD1A3FA50000A941EB /* TruckMakerView.m */,
-				9ECB32CF1A3FA8D400A941EB /* WheelMakerView.h */,
-				9ECB32D01A3FA8D400A941EB /* WheelMakerView.m */,
-				9ECB3A661A41D2FA006E7B32 /* Line.h */,
-				9ECB3A671A41D2FA006E7B32 /* Line.m */,
-				9ECB32D21A3FA9FF00A941EB /* TeeMakerView.h */,
-				9ECB32D31A3FA9FF00A941EB /* TeeMakerView.m */,
-				9E9078B01AAA1A7800F724A1 /* TouchDraw */,
-				9ECB3A691A41D34A006E7B32 /* TouchDrawView.h */,
-				9ECB3A6A1A41D34A006E7B32 /* TouchDrawView.m */,
+				9ED7DFEE1A2D0BF700A9DE54 /* SKTDeckMakerView.h */,
+				9ED7DFEF1A2D0BF700A9DE54 /* SKTDeckMakerView.m */,
+				9ECB32CC1A3FA50000A941EB /* SKTTruckMakerView.h */,
+				9ECB32CD1A3FA50000A941EB /* SKTTruckMakerView.m */,
+				9ECB32CF1A3FA8D400A941EB /* SKTWheelMakerView.h */,
+				9ECB32D01A3FA8D400A941EB /* SKTWheelMakerView.m */,
+				9ECB32D21A3FA9FF00A941EB /* SKTTeeMakerView.h */,
+				9ECB32D31A3FA9FF00A941EB /* SKTTeeMakerView.m */,
 				9ECF1C8C1A2697DD00D2F5ED /* Images.xcassets */,
 				9EBAB2471AE19B0600BA8675 /* skatecanvas blurred.png */,
 				9ECF1C8E1A2697DD00D2F5ED /* LaunchScreen.xib */,
@@ -468,18 +440,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9ECB32D11A3FA8D400A941EB /* WheelMakerView.m in Sources */,
-				9ECB3A681A41D2FA006E7B32 /* Line.m in Sources */,
-				9ECB3A6B1A41D34A006E7B32 /* TouchDrawView.m in Sources */,
-				9ECF1C881A2697DD00D2F5ED /* ViewController.m in Sources */,
-				9E9078AF1AAA1A6A00F724A1 /* OMMTouchableView.m in Sources */,
-				9ECB32D41A3FA9FF00A941EB /* TeeMakerView.m in Sources */,
-				9ECB32CE1A3FA50000A941EB /* TruckMakerView.m in Sources */,
-				9ECF1CA71A26982F00D2F5ED /* DeckViewController.m in Sources */,
-				9ED7DFF01A2D0BF700A9DE54 /* DeckMakerView.m in Sources */,
+				9ECB32D11A3FA8D400A941EB /* SKTWheelMakerView.m in Sources */,
+				9ECF1C881A2697DD00D2F5ED /* SKTMenuViewController.m in Sources */,
+				9ECB32D41A3FA9FF00A941EB /* SKTTeeMakerView.m in Sources */,
+				9ECB32CE1A3FA50000A941EB /* SKTTruckMakerView.m in Sources */,
+				9ECF1CA71A26982F00D2F5ED /* SKTEditorViewController.m in Sources */,
+				9ED7DFF01A2D0BF700A9DE54 /* SKTDeckMakerView.m in Sources */,
 				9ECF1C851A2697DD00D2F5ED /* AppDelegate.m in Sources */,
 				9ECF1C821A2697DD00D2F5ED /* main.m in Sources */,
-				9E9078AE1AAA1A6900F724A1 /* OMMColouredPath.m in Sources */,
 				9E356C6B1AD48ADB009B6ED9 /* HWGOptionsColorToStore.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DeckViewController.h"
+#import "SKTEditorViewController.h"
 #import <iAd/iAd.h>
 
-@interface WheelMakerView : UIView
+@interface SKTWheelMakerView : UIView
 
 @end

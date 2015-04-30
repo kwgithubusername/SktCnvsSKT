@@ -1,5 +1,5 @@
 //
-//  TeeMakerView.h
+//  TruckMakerView.h
 //  starterkit
 //
 //  Created by Woudini on 12/15/14.
@@ -7,8 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DeckViewController.h"
+#import "SKTEditorViewController.h"
 #import <iAd/iAd.h>
-
-@interface TeeMakerView : UIView
+@interface SKTTruckMakerView : UIView
 @end

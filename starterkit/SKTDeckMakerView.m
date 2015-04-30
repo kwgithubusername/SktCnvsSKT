@@ -6,13 +6,13 @@
 //  Copyright (c) 2014 Hi Range. All rights reserved.
 //
 
-#import "DeckMakerView.h"
+#import "SKTDeckMakerView.h"
 #import <QuartzCore/QuartzCore.h>
-@interface DeckMakerView ()
+@interface SKTDeckMakerView ()
 
 @end
 
-@implementation DeckMakerView
+@implementation SKTDeckMakerView
 
 - (void)setup
 {

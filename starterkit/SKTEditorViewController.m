@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Hi Range. All rights reserved.
 //
 
-#import "DeckViewController.h"
+#import "SKTEditorViewController.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <ColorMapView/ColorMapView.h>
 #import "HWGOptionsColorToStore.h"
@@ -16,7 +16,7 @@
 typedef void (^CancelTouchesInViewBlock)();
 typedef void (^RemoveColorGestureBlock)();
 
-@interface DeckViewController () <UIScrollViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate, UIDocumentInteractionControllerDelegate>
+@interface SKTEditorViewController () <UIScrollViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate, UIDocumentInteractionControllerDelegate>
 {
     BOOL _bannerIsVisible;
     ADBannerView *_adBanner;
@@ -31,16 +31,14 @@ typedef void (^RemoveColorGestureBlock)();
 @property BOOL touchDrawViewCreated;
 @property (nonatomic, copy) CancelTouchesInViewBlock cancelTouchesInViewBlock;
 @property (nonatomic, copy) RemoveColorGestureBlock removeColorGestureBlock;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *undoButton;
 @property (nonatomic) CGRect imageForInstagramRect;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *drawButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *baseColorBarButton;
 @property (nonatomic) ColorMapView *colorView;
 @property (nonatomic) HWGOptionsColorToStore *colorStorage;
 
 @end
 
-@implementation DeckViewController
+@implementation SKTEditorViewController
 
 #pragma mark - Ad banner -
 
@@ -312,57 +310,39 @@ typedef void (^RemoveColorGestureBlock)();
 
 #pragma mark - Setup -
 
+-(void)loadEditorWithView:(UIView *)viewToEdit
+{
+    self.currentView = nil;
+    self.currentView = [[UIView alloc] initWithFrame:self.view.frame];
+    self.currentView = viewToEdit;
+    [self.view addSubview:self.currentView];
+}
+
 - (void)loadEditorView
 {
+    UIView *view;
+    
     if ([self.editorString isEqualToString:@"deck"])
     {
-        // NSLog(@"We're making a deck");
-        self.currentView = nil;
-        DeckMakerView *view = [[DeckMakerView alloc] initWithFrame:self.view.frame];
-        view.tag = 999;
-        self.currentView = [[UIView alloc] initWithFrame:self.view.frame];
-        self.currentView = view;
-        [view addObserver:self forKeyPath:@"imageCaptureRect" options:NSKeyValueObservingOptionNew context:NULL];
-        [self.view addSubview:self.currentView];
-        // NSLog(@"Numberofsubviews: %d", [[self.view subviews] count]);
+        view = [[SKTDeckMakerView alloc] initWithFrame:self.view.frame];
     }
     
     if ([self.editorString isEqualToString:@"truck"])
     {
-        // NSLog(@"We're making a truck");
-        self.currentView = nil;
-        TruckMakerView *view = [[TruckMakerView alloc] initWithFrame:self.view.frame];
-        view.tag = 999;
-        self.currentView = [[UIView alloc] initWithFrame:self.view.frame];
-        self.currentView = view;
-        [view addObserver:self forKeyPath:@"imageCaptureRect" options:NSKeyValueObservingOptionNew context:NULL];
-        [self.view addSubview:self.currentView];
-        //NSLog(@"Numberofsubviews: %d", [[self.view subviews] count]);
+        view = [[SKTTruckMakerView alloc] initWithFrame:self.view.frame];
     }
     
     if ([self.editorString isEqualToString:@"wheel"])
     {
-        // NSLog(@"We're making a wheel");
-        self.currentView = nil;
-        WheelMakerView *view = [[WheelMakerView alloc] initWithFrame:self.view.frame];
-        view.tag = 999;
-        self.currentView = [[UIView alloc] initWithFrame:self.view.frame];
-        self.currentView = view;
-        [view addObserver:self forKeyPath:@"imageCaptureRect" options:NSKeyValueObservingOptionNew context:NULL];
-        [self.view addSubview:self.currentView];
+        view = [[SKTWheelMakerView alloc] initWithFrame:self.view.frame];
     }
     
     if ([self.editorString isEqualToString:@"tee"])
     {
-        // NSLog(@"We're making a tee");
-        self.currentView = nil;
-        TeeMakerView *view = [[TeeMakerView alloc] initWithFrame:self.view.frame];
-        view.tag = 999;
-        self.currentView = [[UIView alloc] initWithFrame:self.view.frame];
-        self.currentView = view;
-        [view addObserver:self forKeyPath:@"imageCaptureRect" options:NSKeyValueObservingOptionNew context:NULL];
-        [self.view addSubview:self.currentView];
+        view = [[SKTTeeMakerView alloc] initWithFrame:self.view.frame];
     }
+    
+    [self loadEditorWithView:view];
 }
 
 #pragma mark - Translation, Transform, and Rotation -
@@ -407,7 +387,7 @@ typedef void (^RemoveColorGestureBlock)();
     pinchRecognizer.delegate = self;
     rotationRecognizer.delegate = self;
     
-    DeckViewController __weak *weakSelf = self;
+    SKTEditorViewController __weak *weakSelf = self;
     [self setCancelTouchesInViewBlock:^{
         [weakSelf.view removeGestureRecognizer:panRecognizer];
         [weakSelf.view removeGestureRecognizer:rotationRecognizer];
@@ -449,16 +429,8 @@ typedef void (^RemoveColorGestureBlock)();
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    if ([self.navigationController.viewControllers indexOfObject:self]==NSNotFound)
-    {
-        for (UIView *subview in self.view.subviews)
-        {
-            if (subview.tag == 999)
-            {
-                [subview removeObserver:self forKeyPath:@"imageCaptureRect"];
-            }
-        }
-    }
+    
+    // Make navigation bar opaque again
     [self.navigationController.navigationBar setBackgroundImage:nil
     forBarMetrics:UIBarMetricsDefault];
 }

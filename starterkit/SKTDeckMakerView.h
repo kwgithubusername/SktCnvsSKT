@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DeckViewController.h"
+#import "SKTEditorViewController.h"
 #import <iAd/iAd.h>
-@interface DeckMakerView : UIView
+@interface SKTDeckMakerView : UIView
 @end

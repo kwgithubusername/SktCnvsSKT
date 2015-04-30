@@ -6,13 +6,13 @@
 //  Copyright (c) 2014 Hi Range. All rights reserved.
 //
 
-#import "TeeMakerView.h"
-@interface TeeMakerView ()
+#import "SKTTeeMakerView.h"
+@interface SKTTeeMakerView ()
 
 @end
 
 
-@implementation TeeMakerView
+@implementation SKTTeeMakerView
 
 
 - (void)setup

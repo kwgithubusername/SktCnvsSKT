@@ -6,14 +6,14 @@
 //  Copyright (c) 2014 Hi Range. All rights reserved.
 //
 
-#import "TruckMakerView.h"
+#import "SKTTruckMakerView.h"
 #import <QuartzCore/QuartzCore.h>
 
-@interface TruckMakerView ()
+@interface SKTTruckMakerView ()
 
 @end
 
-@implementation TruckMakerView
+@implementation SKTTruckMakerView
 - (void)setup
 {
     self.backgroundColor = [UIColor clearColor];
